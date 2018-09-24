@@ -1,0 +1,18 @@
+=simple_form_for(@post) do |f|
+  = f.error_notification
+  = f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present?
+
+  .form-inputs
+    = f.input :title
+    = f.input :body
+
+  %h3 Images
+  #images
+    = f.simple_fields_for :images do |image|
+      = render 'image_fields', f: image
+    .links
+      = link_to_add_association 'add image', f, :images
+
+  .form-actions
+    = f.button :submit
+
