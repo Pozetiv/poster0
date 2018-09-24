@@ -5,14 +5,7 @@
   .form-inputs
     = f.input :title
     = f.input :body
-
-  %h3 Images
-  #images
-    = f.simple_fields_for :images do |image|
-      = render 'image_fields', f: image
-    .links
-      = link_to_add_association 'add image', f, :images
-
+    = f.input :image, as: :file
   .form-actions
     = f.button :submit
 
