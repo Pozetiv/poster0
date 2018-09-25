@@ -15,7 +15,12 @@
  */
  @import "bootstrap";
 
- .my-blue-btn{
-   border: 1px solid #007bff;
-   margin-right: 5px;
+ body {
+   padding: 0px;
+   margin: 0px;
+   background: #c7d3e5;
  }
+
+header {
+  background: white;
+}

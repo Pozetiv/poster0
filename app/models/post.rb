@@ -1,12 +1,11 @@
 class Post < ApplicationRecord
   validates :title, presence: true
-  validates :body, presence: true
-  validates :image, presence:true
+  validates :body, length: { minimum: 2 }, allow_blank: true
+  validates :image, presence: true
 
   belongs_to :user
-  has_many :images
+  belongs_to :community
   has_many :comments, as: :commentable
 
   mount_uploader :image, ImageUploader
-
 end

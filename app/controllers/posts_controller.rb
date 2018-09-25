@@ -18,6 +18,9 @@ class PostsController < ApplicationController
   def edit; end
 
   def create
+
+    binding.pry
+
     @post = current_user.posts.new(post_params)
 
     respond_to do |format|
@@ -58,6 +61,6 @@ class PostsController < ApplicationController
     end
 
     def post_params
-      params.require(:post).permit(:title, :body, :image)
+      params.require(:post).permit(:title, :body, :image, :community_id)
     end
 end
