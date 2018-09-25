@@ -6,4 +6,9 @@ class User < ApplicationRecord
 
   has_many :posts
   has_many :comments, as: :commentable
+  has_many :subscribes, dependent: :destroy
+
+  validates :nick, presence: true, uniqueness: true
+
+  mount_uploader :avatar, AvatarUploader
 end

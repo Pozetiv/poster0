@@ -1,0 +1,4 @@
+=simple_form_for(@community) do |f|
+  =f.input :name
+  =f.input :image, as: :file
+  =f.button :submit, class: 'btn'
