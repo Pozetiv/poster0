@@ -8,4 +8,6 @@ class Post < ApplicationRecord
   has_many :comments, as: :commentable
 
   mount_uploader :image, ImageUploader
+
+ ##TODO SCOPES for user->community->posts
 end

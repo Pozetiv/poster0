@@ -1,13 +1,35 @@
--if @posts.any?
-  -@posts.each do |post|
-    .post
-      .post__header
-        =post.community.name =post.user.nick
-      .post__body
-        =link_to (image_tag post.image.url(:thumb), class: 'img-thumbnail' if post.image?), post_path(post)
-        <br>
-        =post.body if post.body?
-      .post__footer
+.container-fluid
+  .row.justify-content-center
+    .col-2
+      col left
+    .col-6.offset-md-1
+      -if @posts.any?
+        -@posts.each do |post|
+          .post
+            .post__header
+              =post.community.name =post.user.nick
+            .post__body
+              =link_to (image_tag post.image.url(:thumb), class: 'img-thumbnail' if post.image?), post_path(post)
+              <br>
+              =post.body if post.body?
+            .post__footer
+              Comments #{post.comments.count}
 
--else
-  %h2 Don't find post
+      -else
+        %h2 Don't find post
+    .col-3
+      .create_post.mb-3
+        Your personal Poster frontpage. Come here to check in with your favorite communities.
+        =link_to 'Create Post',  new_post_path, class: 'btn btn-primary btn-lg btn-block'
+      .communities.d-flex.flex-column
+        %strong.text-center TRENDING COMMUNITIES
+        - @communities.each do |community|
+          .community.d-flex.justify-content-around
+            .community__image
+              = image_tag community.image.url(:mini) if community.image?
+            .community_name
+              = link_to community.name, community_path(community)
+              %br
+              %small #{community.subscribes.count}  subscribers
+            .community__button
+              = button_to 'SUBSCRIBE',  subscribes_path, params: { community_id: community }, class: 'btn btn-primary'

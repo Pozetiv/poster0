@@ -6,4 +6,8 @@ module ApplicationHelper
       image_tag('https://www.redditstatic.com/avatars/avatar_default_07_545452.png')
     end
   end
+
+  def owner(object)
+    object.user == current_user ##|| current_user.admin?
+  end
 end

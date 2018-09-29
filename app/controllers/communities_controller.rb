@@ -1,5 +1,9 @@
 class CommunitiesController < ApplicationController
-  before_action :set_community, except: [:new, :create]
+  before_action :set_community, except: [:new, :create, :index]
+
+  def index
+    @communities = Community.popular_communities
+  end
 
   def new
     @community = Community.new
@@ -35,6 +39,8 @@ class CommunitiesController < ApplicationController
       redirect_to root_path
     end
   end
+
+  def show; end
 
   private
 

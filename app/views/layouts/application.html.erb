@@ -11,31 +11,30 @@
   </head>
   <body>
     <header>
-    <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 ">
-      <%= link_to 'Poster', root_path, class: 'navbar-brand my-0 mr-md-auto font-weight-normal ' %>
-      <nav class="my-2 my-md-0 mr-md-3">
-        <%= link_to new_post_path, class: 'p2 btn' do %>
-          <i class="fas fa-edit"></i> <% end %>
-      </nav>
-      <% if user_signed_in? %>
-        <div class="dropdown">
-          <a class="btn dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <%= mini_avatar(current_user) %> <%= current_user.nick %>
-          </a>
-          <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-            <%= link_to "User Setting", edit_user_password_path, class: 'dropdown-item' %>
-            <div class="dropdown-divider"></div>
-            <%= link_to destroy_user_session_path(current_user), method: :delete, class: 'dropdown-item' do %>
-              <i class="fas fa-sign-out-alt"></i> Log Out <% end %>
+      <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 ">
+        <%= link_to 'Poster', root_path, class: 'navbar-brand my-0 mr-md-auto font-weight-normal ' %>
+        <nav class="my-2 my-md-0 mr-md-3">
+          <%= link_to new_post_path, class: 'p2 btn' do %>
+            <i class="fas fa-edit"></i> <% end %>
+          <% if user_signed_in? %>
+            <div class="dropdown" style="float: right;">
+              <a class="btn dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <%= mini_avatar(current_user) %> <%= current_user.nick %>
+              </a>
+              <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                <%= link_to "User Setting", edit_user_password_path, class: 'dropdown-item' %>
+                <div class="dropdown-divider"></div>
+                <%= link_to destroy_user_session_path(current_user), method: :delete, class: 'dropdown-item' do %>
+                  <i class="fas fa-sign-out-alt"></i> Log Out <% end %>
+              </div>
+            </div>
+          <% else %>
+            <%= link_to 'SIGN IN', new_user_session_path,  class: 'btn my-blue-btn p2' %>
+            <%= link_to 'SIGN UP', new_user_registration_path, class: 'btn btn-primary p2' %>
           </div>
-        </div>
-      <% else %>
-        <%= link_to 'SIGN IN', new_user_session_path,  class: 'btn my-blue-btn' %>
-        <%= link_to 'SIGN UP', new_user_registration_path, class: 'btn btn-primary' %>
-      </div>
-    <% end %>
-
-  </header>
-    <%= yield %>
+      <% end %>
+        </nav>
+    </header>
+      <%= yield %>
   </body>
 </html>

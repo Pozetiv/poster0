@@ -4,6 +4,7 @@ class PostsController < ApplicationController
 
   def index
     @posts = Post.all
+    @communities = Community.popular_communities
   end
 
   def show

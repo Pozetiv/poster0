@@ -7,6 +7,7 @@ class User < ApplicationRecord
   has_many :posts
   has_many :comments, as: :commentable
   has_many :subscribes, dependent: :destroy
+  has_many :communities, through: :subscribes
 
   validates :nick, presence: true, uniqueness: true
 

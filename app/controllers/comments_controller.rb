@@ -29,7 +29,7 @@ class CommentsController < ApplicationController
     end
   end
 
-private
+  private
 
   def comments_params
     params.require(:comment).permit(:body)
@@ -37,7 +37,7 @@ private
 
   def load_commentable
     resource, id = request.path.split('/')[1, 2]
-    @commentable = resource.singularize.classify.constantize.friendly.find(id)
+    @commentable = resource.singularize.classify.constantize.find(id)
   end
 
   def find_comment
@@ -51,5 +51,4 @@ private
       flash.now[:danger] = "Sorry, you're not owners commet"
     end
   end
-end
 end
