@@ -10,6 +10,9 @@ class User < ApplicationRecord
   has_many :communities, through: :subscribes
 
   validates :nick, presence: true, uniqueness: true
+  validates :karma, presence: true, numericality: { only_integer: true }
 
   mount_uploader :avatar, AvatarUploader
+
+  acts_as_voter
 end

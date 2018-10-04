@@ -1,17 +1,30 @@
 // Place all the styles related to the posts controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+$main_background: white;
+
 .post {
-  background: white;
-  border: 2px solid silver;
+  background:  $main_background;
+  border: 1px solid silver;
+
+  .post__vote{
+    background: gainsboro;
+  }
+
+}
+.create_post, .communities {
+  background: $main_background;
   border-radius: 2%;
-  max-width: 510px;
 }
 
-.create_post {
-  background: white;
+.content {
+  flex-basis: 40%;
 }
 
-.communities{
-  background: white;
+.right-panel {
+  flex-basis: 22%;
+}
+
+.left-panel {
+  flex-basis: 20%;
 }

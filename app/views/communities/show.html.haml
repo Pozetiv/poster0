@@ -1,0 +1,58 @@
+.container-fluid
+  %h1
+    = @community.name
+.d-flex.justify-content-center.py-1
+  .left-panel.px-2
+    left
+  .content.px-2
+    - if @community.posts.any?
+      -@community.posts.each do |post|
+        .post.d-flex.flex-row-reverse.mb-3.justify-content-end
+          .post__container.d-flex.flex-column.px-2
+            .post__header
+              %small
+                = link_to post.community.name, community_path(post.community), class: 'text-dark'
+                %span.text-secondary
+                  Posted by #{post.user.nick} #{time_ago_in_words(post.created_at)}
+            .post__body.d-flex.flex-column
+              .post__body_image
+                = link_to (image_tag post.image.url(:thumb) if post.image?), post_path(post)
+              = post.body if post.body?
+            .post__footer.text-secondary
+              Comments
+              = link_to  post_path(post), class: 'text-secondary' do
+                %i.fas.fa-comments #{post.comments.count}
+
+          .post__vote.px-2.pt-4
+            = button_to  up_voted_path, params: { id: post.id } do
+              %i.fas.fa-chevron-up
+            = post.votes_for.size
+            = button_to  down_voted_path, params: { id: post.id } do
+              %i.fas.fa-chevron-down
+    - else
+      %h2 Don't find post
+  .right-panel.px-2
+    .community_details.mb-2
+      .community_details__header.text-center
+        COMMUNITY DETAILS
+      .community_details__main-block.d-flex.flex-column.px-1.text-center
+        = @community.name
+        .main_block__information.d-flex.flex-row.justify-content-around
+          .information__subcribes.d-flex.flex-column
+            = @community.subscribes.count
+            %small Subscribers
+          .information__posts.d-flex.flex-column
+            = @community.posts.count
+            %small Posts
+
+    .community_rules.mb-2
+      .community_rulex_hader.text-center
+        COMMUNITY DERAILS
+      .communtiy_rules_list.px-1
+        rules list
+
+    .community_moderation
+      .community_moderation__header.text-center
+        MODERATORS
+      .community_moderation_list.px-1
+        mod list

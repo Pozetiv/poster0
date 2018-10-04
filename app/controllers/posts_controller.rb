@@ -1,5 +1,5 @@
 class PostsController < ApplicationController
-  before_action :set_post, only: [:show, :edit, :update, :destroy]
+  before_action :set_post, only: [:show, :edit, :update, :destroy, :up_voted, :down_voted]
   before_action :authenticate_user!, except: [:index, :show]
 
   def index
@@ -19,9 +19,6 @@ class PostsController < ApplicationController
   def edit; end
 
   def create
-
-    binding.pry
-
     @post = current_user.posts.new(post_params)
 
     respond_to do |format|
@@ -53,6 +50,15 @@ class PostsController < ApplicationController
       format.html { redirect_to posts_url, notice: 'Post was successfully destroyed.' }
       format.json { head :no_content }
     end
+  end
+
+  def up_voted
+    current_user.likes(@post)
+    binding.pry
+  end
+
+  def down_voted
+    @post.downvote_from current_user
   end
 
   private

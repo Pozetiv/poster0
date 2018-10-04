@@ -9,5 +9,9 @@ class Post < ApplicationRecord
 
   mount_uploader :image, ImageUploader
 
- ##TODO SCOPES for user->community->posts
+  acts_as_votable
+
+  default_scope { order(created_at: :desc) }
+  scope :user_subscribes_posts, -> (user_id) { joins(community: :subscribes).where(user_id: user_id) }
+  ##RODO WRITED MOST POPULAR POST
 end

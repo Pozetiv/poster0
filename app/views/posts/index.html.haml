@@ -1,35 +1,47 @@
-.container-fluid
-  .row.justify-content-center
-    .col-2
-      col left
-    .col-6.offset-md-1
-      -if @posts.any?
-        -@posts.each do |post|
-          .post
+.d-flex.justify-content-center.py-1
+  .left-panel.px-2
+    left-panel
+  .content.px-2
+    - if @posts.any?
+      -@posts.each do |post|
+        .post.d-flex.flex-row-reverse.mb-3.justify-content-end
+          .post__container.d-flex.flex-column.px-2
             .post__header
-              =post.community.name =post.user.nick
-            .post__body
-              =link_to (image_tag post.image.url(:thumb), class: 'img-thumbnail' if post.image?), post_path(post)
-              <br>
-              =post.body if post.body?
-            .post__footer
-              Comments #{post.comments.count}
+              %small
+                = link_to post.community.name, community_path(post.community), class: 'text-dark'
+                %span.text-secondary
+                  Posted by #{post.user.nick} #{time_ago_in_words(post.created_at)}
+            .post__body.d-flex.flex-column
+              .post__body_image
+                = link_to (image_tag post.image.url(:thumb) if post.image?), post_path(post)
+              = post.body if post.body?
+            .post__footer.text-secondary
+              Comments
+              = link_to  post_path(post), class: 'text-secondary' do
+                %i.fas.fa-comments #{post.comments.count}
 
-      -else
-        %h2 Don't find post
-    .col-3
-      .create_post.mb-3
-        Your personal Poster frontpage. Come here to check in with your favorite communities.
-        =link_to 'Create Post',  new_post_path, class: 'btn btn-primary btn-lg btn-block'
-      .communities.d-flex.flex-column
-        %strong.text-center TRENDING COMMUNITIES
-        - @communities.each do |community|
-          .community.d-flex.justify-content-around
-            .community__image
-              = image_tag community.image.url(:mini) if community.image?
-            .community_name
-              = link_to community.name, community_path(community)
-              %br
-              %small #{community.subscribes.count}  subscribers
-            .community__button
-              = button_to 'SUBSCRIBE',  subscribes_path, params: { community_id: community }, class: 'btn btn-primary'
+          .post__vote.px-2.pt-4
+            = button_to  up_voted_path, params: { id: post.id } do
+              %i.fas.fa-chevron-up
+            = post.votes_for.size
+            = button_to  down_voted_path, params: { id: post.id } do
+              %i.fas.fa-chevron-down
+    - else
+      %h2 Don't find post
+  .right-panel.px-2
+    .create_post.mb-3.p-2
+      Your personal Poster frontpage. Come here to check in with your favorite communities.
+      = link_to 'Create Post',  new_post_path, class: 'btn btn-primary btn-lg btn-block'
+    .communities.d-flex.flex-column.p-2
+      %strong.text-center TRENDING COMMUNITIES
+      - @communities.each do |community|
+        .community.d-flex.justify-content-start
+          .community__image_name
+            = image_tag community.image.url(:mini) if community.image?
+            = link_to community.name, community_path(community)
+            %br
+            %small #{community.subscribes.count}  subscribers
+          .community__button.ml-auto
+            = button_to 'SUBSCRIBE',  subscribes_path, params: { community_id: community }, class: 'btn btn-primary'
+
+
