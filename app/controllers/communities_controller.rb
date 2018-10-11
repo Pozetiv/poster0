@@ -2,7 +2,7 @@ class CommunitiesController < ApplicationController
   before_action :set_community, except: [:new, :create, :index]
 
   def index
-    @communities = Community.popular_communities
+    @communities ||= Community.popular_communities
   end
 
   def new
@@ -49,6 +49,6 @@ class CommunitiesController < ApplicationController
   end
 
   def set_community
-    @community = Community.find(params[:id])
+    @community ||= Community.find(params[:id])
   end
 end

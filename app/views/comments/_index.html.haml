@@ -4,5 +4,7 @@
     .media-body
       .mt-0
         =link_to comment.user.nick, "#"
+        = status_user(comment.user)
+        Wrote
         =time_ago_in_words(comment.created_at)
       =comment.body

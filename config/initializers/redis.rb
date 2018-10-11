@@ -1,0 +1,1 @@
+$redis = Redis::Namespace.new("redis_with_rails", redis: Redis.new( db: 15, driver: :hiredis ) )

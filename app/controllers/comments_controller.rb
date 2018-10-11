@@ -2,6 +2,7 @@ class CommentsController < ApplicationController
   before_action :load_commentable
   before_action :owner_comment, only: [:destroy]
   before_action :find_comment, only: [:destroy]
+  before_action :authenticate_user!, expect: [:index]
 
   def index
     @comments = @commentable.comments
