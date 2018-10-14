@@ -12,11 +12,11 @@
   <body>
     <header>
       <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 ">
-        <%= link_to 'Poster', root_path, class: 'navbar-brand my-0 mr-md-auto font-weight-normal ' %>
-        <%= simple_form_for(:search, method: :get, url: posts_path) do |f| %>
-          <%= f.input :line, label: false %>
-          <%= f.button :submit, class: 'btn' %>
-          <% end %>
+        <%= link_to 'Poster', root_path, class: 'navbar-brand my-0 font-weight-normal ' %>
+        <%= simple_form_for( :search, method: :get, url: posts_path, html: { class: 'form-inline mr-auto' } ) do |f| %>
+          <%= f.input :search_text, label: false %>
+          <%= f.button :submit, 'Search', class: 'btn' %>
+        <% end %>
         <nav class="my-2 my-md-0 mr-md-3">
           <%= link_to new_post_path, class: 'p2 btn' do %>
             <i class="fas fa-edit"></i> <% end %>

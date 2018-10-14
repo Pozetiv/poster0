@@ -3,7 +3,7 @@ class PostsController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
 
   def index
-    @posts = Post.all
+    params[:search] ? @posts = Post.search(params[:search]) : @posts ||= Post.all
     @communities ||= Community.popular_communities
   end
 
@@ -54,11 +54,12 @@ class PostsController < ApplicationController
 
   def up_voted
     current_user.likes(@post)
-    binding.pry
+    redirect_back(fallback_location: root_path)
   end
 
   def down_voted
     @post.downvote_from current_user
+    redirect_back(fallback_location: root_path)
   end
 
   private
