@@ -41,6 +41,7 @@ gem 'bootsnap', '>= 1.1.0', require: false
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
+  gem 'rspec-rails', '~> 3.8'
 end
 
 group :development do
@@ -70,3 +71,4 @@ gem 'simple_form', '~> 4.0', '>= 4.0.1'
 gem 'devise', '~> 4.5'
 gem 'carrierwave', '~> 1.0'
 gem 'acts_as_votable', '~> 0.11.1'
+gem 'friendly_id'

@@ -12,6 +12,8 @@
     .post__body
       = image_tag @post.image.url(:thumb), class: 'img-thumbnail' if @post.image?
       %br
+      = @post.body if @post.body.present?
+      %br
       - if owner(@post)
         = link_to "Edit", edit_post_path(@post), class: "button"
         = link_to 'Delete', post_path(@post), method: :delete, class: 'button'

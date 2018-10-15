@@ -26,6 +26,7 @@
                 <%= mini_avatar(current_user) %> <%= current_user.nick %>
               </a>
               <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                <%= link_to 'Create community', new_community_path, class: 'dropdown-item' %>
                 <%= link_to "User Setting", edit_user_password_path, class: 'dropdown-item' %>
                 <div class="dropdown-divider"></div>
                 <%= link_to destroy_user_session_path(current_user), method: :delete, class: 'dropdown-item' do %>

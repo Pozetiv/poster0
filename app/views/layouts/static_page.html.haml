@@ -1,0 +1,20 @@
+!!!
+%html
+  %head
+    %titlePoster
+    = csrf_meta_tags
+    = csp_meta_tag
+    = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload'
+    = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
+    %link{crossorigin: "anonymous", href: "https://use.fontawesome.com/releases/v5.3.1/css/all.css", integrity: "sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU", rel: "stylesheet"}
+  %body
+    %header
+      .d-flex.flex-row.p-2.align-items-center.py-2
+        = link_to 'Poster', root_path, class: 'navbar-brand my-0 font-weight-normal'
+        %nav.ml-3.d-flex.flex-row
+          = link_to 'About',  about_path, class: 'px-3 btn text-secondary'
+          = link_to 'Career', '#', class: 'px-3 btn text-secondary'
+          = link_to 'Press', '#', class: 'px-3 btn text-secondary'
+          = link_to 'Blog', '#', class: 'px-3 btn text-secondary'
+
+    = yield

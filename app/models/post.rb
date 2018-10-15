@@ -1,5 +1,7 @@
 class Post < ApplicationRecord
-  after_save :set_to_redis
+  after_update :cache_writed
+  after_destroy :cache_delete
+
   validates :title, presence: true
   validates :body, length: { minimum: 2 }, allow_blank: true
   validates :image, presence: true
@@ -12,6 +14,9 @@ class Post < ApplicationRecord
 
   acts_as_votable
 
+  include FriendlyId
+  friendly_id :title, :use => [:slugged, :finders]
+
   default_scope { order(created_at: :desc) }
   scope :user_subscribes_posts, -> ( user_id ) { joins( community: :subscribes ).where( user_id: user_id ) }
   scope :posts_user, -> ( user ) { joins( :user ).where( "users.nick like ?", "%#{user}%" ) if user.present? }
@@ -19,17 +24,27 @@ class Post < ApplicationRecord
   scope :most_liked, -> { joins(:acts_as_votable).order(cached_votes_total: :desc) }
   ##RODO WRITED MOST POPULAR POST
 
-  def set_to_redis
-    $redis.mapped_hmset( redis_key, self.attributes )
+
+  class << self
+    def cache_find(slug)
+      Rails.cache.fetch ( "Post:#{slug}" ) do
+        Post.friendly.find(slug)
+      end
+    end
   end
 
   def self.search(params)
     self.posts_user(params[:search_text]).posts_community(params[:search_text])
   end
 
+  def cache_writed
+    # binding.pry
+    Rails.cache.write( "Post:#{self.slug}", self )
+  end
+
   private
 
-  def redis_key
-    "#{self.class}:#{self.id}"
+  def cache_delete
+    Rails.cache.delete( "Post:#{self.slug}" )
   end
 end

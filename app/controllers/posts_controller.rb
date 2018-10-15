@@ -4,7 +4,7 @@ class PostsController < ApplicationController
 
   def index
     params[:search] ? @posts = Post.search(params[:search]) : @posts ||= Post.all
-    @communities ||= Community.popular_communities
+    @communities ||= Community.popular_communities_mini
   end
 
   def show
@@ -45,10 +45,10 @@ class PostsController < ApplicationController
   end
 
   def destroy
-    @post.destroy
-    respond_to do |format|
-      format.html { redirect_to posts_url, notice: 'Post was successfully destroyed.' }
-      format.json { head :no_content }
+    if @post.destroy
+      redirect_to root_path, notice: 'POst was successfule destroyed'
+    else
+      redirect_to @post
     end
   end
 
@@ -62,10 +62,14 @@ class PostsController < ApplicationController
     redirect_back(fallback_location: root_path)
   end
 
+
   private
 
     def set_post
-      @post = Post.find(params[:id])
+      @post = Post.cache_find(params[:id])
+      # @post ||= Post.friendly.find(params[:id])
+    rescue ActiveRecord::RecordNotFound
+      render file: 'public/404.html'
     end
 
     def post_params

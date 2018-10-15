@@ -1,5 +1,6 @@
 class CommunitiesController < ApplicationController
   before_action :set_community, except: [:new, :create, :index]
+  before_action :authenticate_user!, except: [:index, :show]
 
   def index
     @communities ||= Community.popular_communities
@@ -49,6 +50,8 @@ class CommunitiesController < ApplicationController
   end
 
   def set_community
-    @community ||= Community.find(params[:id])
+    @community ||= Community.friendly.find(params[:id])
+  rescue ActiveRecord::RecordNotFound
+    render file: 'public/404.html'
   end
 end

@@ -1,0 +1,24 @@
+.wrapper {
+  height: 100%;
+
+  .main_block {
+    height: 500px;
+  }
+}
+
+.main_function {
+  width: 65%;
+  > div {
+    border: 1px solid white;
+    > strong {
+      font-size: 1.5em;
+      > .fas.fa-arrow-alt-up {
+        opacity: 1;
+      }
+    }
+  }
+}
+
+.project_in_numbers {
+  width: 65%;
+}

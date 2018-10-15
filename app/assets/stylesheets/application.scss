@@ -26,3 +26,19 @@
 header {
   background: white;
 }
+
+.btn-orange {
+  background: orangered;
+  color: white;
+
+  &:hover {
+    background: transparent;
+    color: orangered;
+    border: 1px solid orangered;
+    transition: 0.4ms;
+  }
+}
+
+.text-orange {
+  color: orangered;
+}

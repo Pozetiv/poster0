@@ -1,6 +1,3 @@
-.container-fluid
-  %h1
-    = @community.name
 .d-flex.justify-content-center.py-1
   .left-panel.px-2
     left
@@ -35,8 +32,9 @@
     .community_details.mb-2
       .community_details__header.text-center
         COMMUNITY DETAILS
-      .community_details__main-block.d-flex.flex-column.px-1.text-center
+      .community_details__main-block.d-flex.flex-column.p-2
         = @community.name
+        = button_to 'SUBSCRIBE',  subscribes_path, params: { community_id: @community }, class: 'btn btn-primary btn-lg btn-block'
         .main_block__information.d-flex.flex-row.justify-content-around
           .information__subcribes.d-flex.flex-column
             = @community.subscribes.count

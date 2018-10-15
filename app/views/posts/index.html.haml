@@ -12,6 +12,7 @@
                 %span.text-secondary
                   Posted by #{post.user.nick} #{time_ago_in_words(post.created_at)}
             .post__body.d-flex.flex-column
+              = post.title
               .post__body_image
                 = link_to (image_tag post.image.url(:thumb) if post.image?), post_path(post)
               = post.body if post.body?
@@ -32,7 +33,7 @@
     .create_post.mb-3.p-2
       Your personal Poster frontpage. Come here to check in with your favorite communities.
       = link_to 'Create Post',  new_post_path, class: 'btn btn-primary btn-lg btn-block'
-    .communities.d-flex.flex-column.p-2
+    .communities.d-flex.flex-column.mb-3.p-2
       %strong.text-center TRENDING COMMUNITIES
       - @communities.each do |community|
         .community.d-flex.justify-content-start
@@ -42,4 +43,24 @@
             %br
             %small #{community.subscribes.count}  subscribers
           .community__button.ml-auto
-            = button_to 'SUBSCRIBE',  subscribes_path, params: { community_id: community }, class: 'btn btn-primary'
+            = button_to 'SUBSCRIBE',  subscribes_path, params: { community_id: community.id }, class: 'btn btn-primary'
+    .right-footer.d-flex.flex-column.p-2
+      .footer__link.d-flex.flex-row.mx-auto
+        .column-1.d-flex.flex-column.pr-3
+          = link_to 'About', about_path
+          = link_to 'Careers', '#'
+          = link_to 'Press', '#'
+        .column-2.d-flex.flex-column
+          = link_to 'Blog', '#'
+          = link_to 'Help', '#'
+      .copyrating.pt-3.d-flex.flex-column.text-center
+        = link_to 'Content Policy', '#'
+        = link_to 'User Agreement', '#'
+        &copy  #{Time.now.year} Reddit, Inc. All rights reserved
+        %small
+          %b TRAINING APPLICATION
+
+
+
+
+

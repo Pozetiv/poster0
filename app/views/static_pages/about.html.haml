@@ -1,1 +1,37 @@
-About
+.wrapper
+  .content.d-flex.flex-column
+    .main_block.d-flex.mx-auto.align-items-center
+      %h1 THE CONVERSATION STARTS HERE
+    .how_its_work.mx-auto.text-center
+      %h1 How Does Reddit Work?
+      Every day, millions of people around the world post, vote, and comment in communities organized around their interests.
+      %br
+      = link_to 'Visit to Poster', root_path, class: 'btn btn-lg btn-orange my-4'
+    .main_function.d-flex.flex-row.mx-auto.justify-content-center
+      .main_fucntion__post.d-flex.flex-column.p-4.mx-2
+        %strong.pb-3
+          %i.fas.fa-edit.text-orange
+          Post
+        The community can share content by posting stories, links, images, and videos.
+      .main_fucntion__comment.d-flex.flex-column.p-4.mx-2
+        %strong.pb-3
+          %i.fas.fa-comments.text-orange
+          Comment
+        The community comments on posts. Comments provide discussion and often humor.
+      .main_fucntion__vote.d-flex.flex-column.p-4.mx-2
+        %strong.pb-3
+          %i.fas.fa-arrow-alt-up.text-orange
+          Vote
+        Comments & posts can be upvoted or downvoted. The most interesting content rises to the top.
+
+    .project_in_numbers.d-flex.flex-column.text-center.mx-auto
+      %h2 Project by the numbers
+      .project_in_numbers__informations.d-flex.flex-row.mx-auto.justify-content-center
+        .informations__rating.p-4
+          rating
+        .informations__user.p-4
+          users
+        .informations__community.p-4
+          Community
+        .informations__posts.p-4
+          posts
