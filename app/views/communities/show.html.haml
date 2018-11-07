@@ -47,7 +47,12 @@
       .community_rulex_hader.text-center
         COMMUNITY DERAILS
       .communtiy_rules_list.px-1
-        rules list
+        %ol
+          -@rules.each do |rule|
+            %li
+              %strong= rule.title
+            = rule.text
+
 
     .community_moderation
       .community_moderation__header.text-center

@@ -22,8 +22,11 @@ class Post < ApplicationRecord
   scope :posts_user, -> ( user ) { joins( :user ).where( "users.nick like ?", "%#{user}%" ) if user.present? }
   scope :posts_community, -> ( community ) { joins( :community ).where( "communities.name like ?", "%#{community}%" ) if community.present? }
   scope :most_liked, -> { joins(:acts_as_votable).order(cached_votes_total: :desc) }
-  ##RODO WRITED MOST POPULAR POST
+  ##TODO WRITED MOST POPULAR POST
 
+  def cache_writed
+    Rails.cache.write( "Post:#{self.slug}", self )
+  end
 
   class << self
     def cache_find(slug)
@@ -31,15 +34,10 @@ class Post < ApplicationRecord
         Post.friendly.find(slug)
       end
     end
-  end
 
-  def self.search(params)
-    self.posts_user(params[:search_text]).posts_community(params[:search_text])
-  end
-
-  def cache_writed
-    # binding.pry
-    Rails.cache.write( "Post:#{self.slug}", self )
+    def search(params)
+      self.posts_user(params[:search_text]).posts_community(params[:search_text])
+    end
   end
 
   private

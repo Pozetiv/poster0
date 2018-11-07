@@ -1,4 +1,10 @@
 =simple_form_for(@community) do |f|
   =f.input :name
-  =f.input :image, as: :file
+  =f.input :image, label: 'Label communities', as: :file
+  %h3 Rules
+  #Rules
+    = f.simple_fields_for :rules do |rule|
+      = render 'rule_fields', f: rule
+    .links
+      = link_to_add_association 'Add Rule', f, :rules
   =f.button :submit, class: 'btn'

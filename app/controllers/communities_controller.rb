@@ -13,7 +13,7 @@ class CommunitiesController < ApplicationController
   def create
     @community = Community.new(communities_params)
     if @community.save
-      redirect_to root_path
+      redirect_to @community
       flash.now[:success] = 'Community created'
     else
       render :new
@@ -23,9 +23,9 @@ class CommunitiesController < ApplicationController
   def edit; end
 
   def update
-    if @community.update_attributes(communiries_params)
+    if @community.update_attributes(communities_params)
       flash.now[:success] = 'Updated information about community'
-      redirect_to root_path
+      redirect_to @community
     else
       render :edit
       flash[:warning] = 'Opps we have a problems'
@@ -41,12 +41,14 @@ class CommunitiesController < ApplicationController
     end
   end
 
-  def show; end
+  def show
+    @rules = @community.rules
+  end
 
   private
 
   def communities_params
-    params.require(:community).permit(:name, :image)
+    params.require(:community).permit(:name, :image, rules_attributes: [:id, :text, :title, :_destroy])
   end
 
   def set_community

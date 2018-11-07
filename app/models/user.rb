@@ -19,4 +19,8 @@ class User < ApplicationRecord
   def online?
     $redis.exists(self.id)
   end
+
+  def admin?
+    self.admin == true
+  end
 end
