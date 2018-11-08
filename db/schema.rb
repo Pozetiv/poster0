@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_11_07_100157) do
+ActiveRecord::Schema.define(version: 2018_11_08_163723) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -30,6 +30,11 @@ ActiveRecord::Schema.define(version: 2018_11_07_100157) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "slug"
+  end
+
+  create_table "community_administrations", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "community_id"
   end
 
   create_table "friendly_id_slugs", id: :serial, force: :cascade do |t|
@@ -99,6 +104,7 @@ ActiveRecord::Schema.define(version: 2018_11_07_100157) do
     t.index ["voter_id", "voter_type", "vote_scope"], name: "index_votes_on_voter_id_and_voter_type_and_vote_scope"
   end
 
+  add_foreign_key "community_administrations", "users"
   add_foreign_key "posts", "users"
   add_foreign_key "rules", "communities"
 end

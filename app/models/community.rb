@@ -7,6 +7,7 @@ class Community < ApplicationRecord
   has_many :subscribes, dependent: :destroy
   has_many :posts
   has_many :rules, inverse_of: :community, dependent: :destroy
+  has_many :community_administrations, class_name: 'Community::Administration',dependent: :destroy
 
   accepts_nested_attributes_for :rules, reject_if: :all_blank, allow_destroy: true
 
@@ -14,4 +15,7 @@ class Community < ApplicationRecord
   scope :popular_communities_mini, -> { popular_communities.limit(5) }
 
   mount_uploader :image, CommunityUploader
+
+  def administion?(user)
+  end
 end

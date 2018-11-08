@@ -1,7 +1,4 @@
 class Post < ApplicationRecord
-  after_update :cache_writed
-  after_destroy :cache_delete
-
   validates :title, presence: true
   validates :body, length: { minimum: 2 }, allow_blank: true
   validates :image, presence: true
@@ -24,25 +21,7 @@ class Post < ApplicationRecord
   scope :most_liked, -> { joins(:acts_as_votable).order(cached_votes_total: :desc) }
   ##TODO WRITED MOST POPULAR POST
 
-  def cache_writed
-    Rails.cache.write( "Post:#{self.slug}", self )
-  end
-
-  class << self
-    def cache_find(slug)
-      Rails.cache.fetch ( "Post:#{slug}" ) do
-        Post.friendly.find(slug)
-      end
-    end
-
     def search(params)
       self.posts_user(params[:search_text]).posts_community(params[:search_text])
     end
-  end
-
-  private
-
-  def cache_delete
-    Rails.cache.delete( "Post:#{self.slug}" )
-  end
 end

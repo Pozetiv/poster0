@@ -66,8 +66,7 @@ class PostsController < ApplicationController
   private
 
     def set_post
-      @post = Post.cache_find(params[:id])
-      # @post ||= Post.friendly.find(params[:id])
+      @post ||= Post.friendly.find(params[:id])
     rescue ActiveRecord::RecordNotFound
       render file: 'public/404.html'
     end
