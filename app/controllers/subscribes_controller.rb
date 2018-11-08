@@ -19,6 +19,8 @@ class SubscribesController < ApplicationController
         flash.now[:success] = "Unsubscribed"
         redirect_back(fallback_location: root_path)
       else
+        redirect_to root_path
+        flash[:danger] = "You can't delete subscribes"
       end
     end
 end

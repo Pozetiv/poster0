@@ -1,0 +1,12 @@
+%table.table
+  %thead
+    %tr
+      %th Nick
+      %th Email
+      %th Status
+  %tbody
+    -@users.each do |user|
+      %tr
+        %td= user.nick
+        %td= user.email
+        %td= button_to 'Admins',  add_admin_path, params: { user: user.id }

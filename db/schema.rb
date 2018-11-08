@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_11_07_100157) do
+ActiveRecord::Schema.define(version: 2018_11_11_221755) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -30,6 +30,13 @@ ActiveRecord::Schema.define(version: 2018_11_07_100157) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "slug"
+    t.integer "user_id"
+    t.string "category"
+  end
+
+  create_table "community_administrations", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "community_id"
   end
 
   create_table "friendly_id_slugs", id: :serial, force: :cascade do |t|
@@ -81,6 +88,7 @@ ActiveRecord::Schema.define(version: 2018_11_07_100157) do
     t.string "nick"
     t.string "avatar"
     t.integer "karma", default: 1
+    t.boolean "admin", default: false
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
@@ -99,6 +107,7 @@ ActiveRecord::Schema.define(version: 2018_11_07_100157) do
     t.index ["voter_id", "voter_type", "vote_scope"], name: "index_votes_on_voter_id_and_voter_type_and_vote_scope"
   end
 
+  add_foreign_key "community_administrations", "users"
   add_foreign_key "posts", "users"
   add_foreign_key "rules", "communities"
 end

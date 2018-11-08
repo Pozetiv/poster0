@@ -1,6 +1,7 @@
 class PostsController < ApplicationController
   before_action :set_post, only: [:show, :edit, :update, :destroy, :up_voted, :down_voted]
   before_action :authenticate_user!, except: [:index, :show]
+  before_action :check_owner, only: [:edit, :update, :destroy]
 
   def index
     params[:search] ? @posts = Post.search(params[:search]) : @posts ||= Post.all
@@ -23,7 +24,7 @@ class PostsController < ApplicationController
 
     respond_to do |format|
       if @post.save
-        format.html { redirect_to @post, notice: 'Post was successfully created.' }
+        format.html { redirect_to @post, info: 'Post was successfully created.' }
         format.json { render :show, status: :created, location: @post }
       else
         format.html { render :new }
@@ -35,7 +36,7 @@ class PostsController < ApplicationController
   def update
     respond_to do |format|
       if @post.update(post_params)
-        format.html { redirect_to @post, notice: 'Post was successfully updated.' }
+        format.html { redirect_to @post, info: 'Post was successfully updated.' }
         format.json { render :show, status: :ok, location: @post }
       else
         format.html { render :edit }
@@ -46,7 +47,7 @@ class PostsController < ApplicationController
 
   def destroy
     if @post.destroy
-      redirect_to root_path, notice: 'POst was successfule destroyed'
+      redirect_to root_path, info: 'Post was successfule destroyed'
     else
       redirect_to @post
     end
@@ -66,13 +67,18 @@ class PostsController < ApplicationController
   private
 
     def set_post
-      @post = Post.cache_find(params[:id])
-      # @post ||= Post.friendly.find(params[:id])
+      @post ||= Post.friendly.find(params[:id])
     rescue ActiveRecord::RecordNotFound
       render file: 'public/404.html'
     end
 
     def post_params
       params.require(:post).permit(:title, :body, :image, :community_id)
+    end
+
+    def check_owner
+      unless @post.user == current_user || @post.community.administrator?(current_user.id)
+        redirect_to @post, Info: "Sorry you are cann't do this"
+      end
     end
 end
