@@ -25,3 +25,4 @@ class Post < ApplicationRecord
       self.posts_user(params[:search_text]).posts_community(params[:search_text])
     end
 end
+##TODO add key velue to radis

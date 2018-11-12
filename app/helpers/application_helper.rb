@@ -8,7 +8,7 @@ module ApplicationHelper
   end
 
   def owner(object)
-    object.user == current_user ##|| current_user.admin?
+    object.user == current_user || current_user.admin?
   end
 
   def voter_system_button(object)

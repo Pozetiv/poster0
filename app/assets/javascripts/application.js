@@ -19,3 +19,10 @@
 //= require bootstrap-sprockets
 //= require cocoon
 
+
+
+// TODO HIDE FLASH MESSAGES
+$(document).ready(
+  $(".alert-info").hide(2000, function() {
+    $(this).remove();
+  }))

@@ -8,6 +8,7 @@ class User < ApplicationRecord
   has_many :comments, as: :commentable
   has_many :subscribes, dependent: :destroy
   has_many :communities, through: :subscribes
+  has_many :created_communities, class_name: "Community"
 
   validates :nick, presence: true, uniqueness: true
   validates :karma, presence: true, numericality: { only_integer: true }
@@ -21,6 +22,8 @@ class User < ApplicationRecord
   end
 
   def admin?
-    self.admin == true
+    self[:admin] == true
   end
+
+ ##TODO SET IN TO REDIS HASH WITH EMAIL NAME
 end
