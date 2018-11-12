@@ -11,6 +11,12 @@ class ApplicationController < ActionController::Base
   end
 
   def set_online_user
-    $redis.set( current_user.id, nil, ex: 10*60 ) if current_user
+    $redis.set(current_user.id, nil, ex: 10*60) if current_user
+  end
+
+  def admin
+    unless current_user.admin?
+      redirect_to root_path, info: 'Sorry you are not from administration site'
+    end
   end
 end

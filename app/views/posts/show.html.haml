@@ -14,7 +14,7 @@
       %br
       = @post.body if @post.body.present?
       %br
-      - if owner(@post)
+      - if user_signed_in? && owner(@post)
         = link_to "Edit", edit_post_path(@post), class: "button"
         = link_to 'Delete', post_path(@post), method: :delete, class: 'button'
 
