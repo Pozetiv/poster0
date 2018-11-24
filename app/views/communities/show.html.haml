@@ -42,7 +42,7 @@
           .information__posts.d-flex.flex-column
             = @community.posts.count
             %small Posts
-        = link_to 'VIew Subscribers', subscribers_path, class: 'text-muted'
+        = link_to 'View Subscribers', subscribers_community_path, class: 'text-muted'
         - if user_signed_in? && ( @community.owner?(current_user) || current_user.admin? )
           .community__buttoms
             = link_to 'Edit', edit_community_path(@community)

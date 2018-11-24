@@ -2,7 +2,7 @@ class Community < ApplicationRecord
   extend FriendlyId
   friendly_id :name, use: :slugged
 
-  CATEGORY_COMMUNITY = ['Technologies', 'Game', 'Jokes', 'Cars', 'For girls', 'For mans', 'Study']
+  CATEGORY_COMMUNITY = %w[ Technologies Game Jokes Cars For girls For mans Study ]
   validates :category, presence: true, inclusion: { in: CATEGORY_COMMUNITY }
   validates :name, presence: true, uniqueness: true, length: { in: 2..15 }
 

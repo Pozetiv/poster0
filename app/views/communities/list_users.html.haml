@@ -5,8 +5,8 @@
       %th Email
       %th Status
   %tbody
-    -@users.each do |user|
+    - @users.each do |user|
       %tr
         %td= user.nick
         %td= user.email
-        %td= button_to 'Admins',  add_admin_path, params: { user: user.id }
+        %td= button_to 'Admins',  add_admin_community_path, params: { user: user.id }

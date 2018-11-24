@@ -20,7 +20,7 @@
 
     .comment_block
     - if user_signed_in?
-      %h2 Create commit
+      %h2 Write commit
       = render 'comments/form'
 
     = render 'comments/index', locals: { commentable: @post }
