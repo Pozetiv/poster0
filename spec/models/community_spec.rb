@@ -10,4 +10,11 @@ RSpec.describe Community, type: :model do
   describe 'Validations' do
     it { should validate_presence_of(:name) }
   end
+
+  describe 'Create' do
+    it 'be valid' do
+      comm = create(:community)
+      expect(comm).to be_valid
+    end
+  end
 end

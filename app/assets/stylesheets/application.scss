@@ -42,3 +42,28 @@ header {
 .text-orange {
   color: orangered;
 }
+
+.content { 
+  flex: 2 50%;
+}
+
+.right-panel, .left-panel { 
+  flex: 1 20%;
+}
+
+.panel_block { 
+  background: white;
+  border-radius: 2%;
+}
+$main_background: white;
+
+.post {
+  background:  $main_background;
+  border: 1px solid silver;
+
+  .post__vote{
+    background: gainsboro;
+  }
+
+}
+

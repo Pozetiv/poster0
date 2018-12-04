@@ -1,10 +1,14 @@
--@comments.each do |comment|
-  .media.comment
-    =avatar_for_comments(comment.user)
-    .media-body
-      .mt-0
-        =link_to comment.user.nick, "#"
-        = status_user(comment.user)
-        Wrote
-        =time_ago_in_words(comment.created_at)
-      =comment.body
+- @comments.each do |comment|
+  %div{ class: "comment-#{comment.id} d-flex flex-row p-2" }
+    .commentable__info.d-flex.flex-column.text-center.pr-2
+      = avatar_for_comments(comment.user)
+      = link_to comment.user.nick, "#"
+      = status_user(comment.user)
+      = link_to "#" do
+        %i.far.fa-envelope-open
+    .comment__body.d-flex.flex-column
+      .comment__body__info
+        %small Wrote: #{time_ago_in_words(comment.created_at)}
+      = comment.body
+
+

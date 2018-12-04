@@ -6,5 +6,7 @@ class CommunityAdministrations < ActiveRecord::Migration[5.2]
     end
 
     add_foreign_key :community_administrations, :users
+    add_column :communities, :user_id, :integer
+    add_column :users, :admin, :boolean, default: false
   end
 end

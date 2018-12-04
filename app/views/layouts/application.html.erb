@@ -21,11 +21,14 @@
           <%= link_to new_post_path, class: 'p2 btn' do %>
             <i class="fas fa-edit"></i> <% end %>
           <% if user_signed_in? %>
+            <%= link_to user_mail_boxes_path(current_user), class: 'p2 btn' do %>
+              <i class="far fa-envelope-open"></i> <% end %>
             <div class="dropdown" style="float: right;">
               <a class="btn dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <%= mini_avatar(current_user) %> <%= current_user.nick %>
               </a>
               <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                <%= link_to 'Profile', user_profile_path(current_user), class: 'dropdown-item' %>
                 <%= link_to 'Create community', new_community_path, class: 'dropdown-item' %>
                 <%= link_to "User Setting", edit_user_password_path, class: 'dropdown-item' %>
                 <div class="dropdown-divider"></div>
@@ -40,6 +43,19 @@
       <% end %>
         </nav>
     </header>
-      <%= yield %>
+         <!-- Flash messages block -->
+        <%= render 'shared/flash_messages'%>
+      <!-- Flash messages block -->
+      <div class="d-flex justify-content-center py-1">
+        <div class="left-panel px-2">
+          <%= yield :left_panel %>
+        </div>
+        <div class="content px-2">
+           <%= yield %>
+        </div>
+        <div class="right-panel px-2">
+          <%= yield :right_panel %>
+        </div>
+      </div>
   </body>
 </html>

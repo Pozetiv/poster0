@@ -14,13 +14,13 @@
       %br
       = @post.body if @post.body.present?
       %br
-      - if owner(@post)
+      - if user_signed_in? && owner(@post)
         = link_to "Edit", edit_post_path(@post), class: "button"
         = link_to 'Delete', post_path(@post), method: :delete, class: 'button'
 
     .comment_block
     - if user_signed_in?
-      %h2 Create commit
+      %h2 Write commit
       = render 'comments/form'
 
     = render 'comments/index', locals: { commentable: @post }
