@@ -5,7 +5,7 @@ class Post < ApplicationRecord
 
   belongs_to :user
   belongs_to :community
-  has_many :comments, as: :commentable
+  has_many :comments, as: :commentable, dependent: :destroy
 
   mount_uploader :image, ImageUploader
 
@@ -14,7 +14,7 @@ class Post < ApplicationRecord
   include FriendlyId
   friendly_id :title, :use => [:slugged, :finders]
 
-  default_scope {order(created_at: :desc)}
+  default_scope { order(created_at: :desc) }
   scope :user_subscribes_posts, -> (user_id) { joins( community: :subscribes ).where(user_id: user_id) }
   scope :posts_user, -> (user) { joins(:user).where("users.nick like ?", "%#{user}%") if user.present? }
   scope :posts_community, -> (community) { joins( :community ).where( "communities.name like ?", "%#{community}%") if community.present? }

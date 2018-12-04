@@ -1,14 +1,16 @@
 - @comments.each do |comment|
-  %div{ class: "comment-#{comment.id} d-flex flex-row p-2" }
+  %div{ class: "comment-#{comment.id} d-flex flex-row p-2 bd-highlight" }
     .commentable__info.d-flex.flex-column.text-center.pr-2
       = avatar_for_comments(comment.user)
-      = link_to comment.user.nick, "#"
+      = link_to comment.user.nick, user_profile_path(comment.user)
       = status_user(comment.user)
       = link_to "#" do
         %i.far.fa-envelope-open
-    .comment__body.d-flex.flex-column
-      .comment__body__info
-        %small Wrote: #{time_ago_in_words(comment.created_at)}
+    .comment__body.d-flex.flex-column.bd-highlight
+      .comment__body__info.d-flex.bd-highlight
+        .information.mr-auto
+          %small Wrote: #{time_ago_in_words(comment.created_at)}
+        .information__buttons.ml-auto
+          = link_to raw('<i class="fas fa-highlighter"></i>'), edit_post_comment_path(@commentable, comment.id)
+          = link_to raw('<i class="fas fa-times"></i>'),  post_comment_path(@commentable, comment.id), method: :delete, data: { confirm: 'Do you want delete commit?' }
       = comment.body
-
-

@@ -2,7 +2,11 @@ Rails.application.routes.draw do
   root "posts#index"
 
   resources :posts do
-    resources :comments, except: [:show]
+    resources :comments, except: [:show] do
+       member do
+        get :replies
+      end
+    end
   end
 
   resources :communities do

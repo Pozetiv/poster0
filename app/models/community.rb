@@ -2,9 +2,10 @@ class Community < ApplicationRecord
   extend FriendlyId
   friendly_id :name, use: :slugged
 
-  CATEGORY_COMMUNITY = %w[ Technologies Game Jokes Cars For girls For mans Study ]
+  CATEGORY_COMMUNITY = ['Technologies', 'Game', 'Jokes', 'Cars', 'For girls', 'For mans', 'Study']
+
   validates :category, presence: true, inclusion: { in: CATEGORY_COMMUNITY }
-  validates :name, presence: true, uniqueness: true, length: { in: 2..15 }
+  validates :name, presence: true, uniqueness: true, length: { in: 2..25 }
 
   belongs_to :owner, class_name: "User", foreign_key: "user_id"
   has_many :subscribes, dependent: :destroy
@@ -17,6 +18,8 @@ class Community < ApplicationRecord
 
   scope :popular_communities, -> { left_outer_joins(:subscribes).group('communities.id').order('COUNT(subscribes.community_id) DESC') }
   scope :popular_communities_mini, -> { popular_communities.limit(5) }
+
+  after_save :subscribe_owner
 
   mount_uploader :image, CommunityUploader
 
@@ -31,5 +34,10 @@ class Community < ApplicationRecord
   def add_administrations(user)
     self.community_administrations.create(user_id: user)
   end
+
+  private
+  
+  def subscribe_owner
+    self.subscribes.create(user: self.owner )
+  end
 end
-#####TODO JS HIDE FLASH INFo

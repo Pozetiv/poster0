@@ -1,7 +1,7 @@
 class CommentsController < ApplicationController
   before_action :load_commentable
   before_action :owner_comment, only: [:destroy]
-  before_action :find_comment, only: [:destroy]
+  before_action :find_comment, only: [:destroy, :update, :edit]
   before_action :authenticate_user!, expect: [:index]
 
   def index
@@ -16,6 +16,16 @@ class CommentsController < ApplicationController
     @comment = @commentable.comments.new(comments_params)
     @comment.user = current_user
     if @comment.save
+      redirect_to @commentable
+    else
+      redirect_to @commentable
+    end
+  end
+
+  def edit; end
+
+  def update 
+    if @comment.update_attributes(comments_params)
       redirect_to @commentable
     else
       redirect_to @commentable
