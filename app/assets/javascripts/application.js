@@ -21,8 +21,9 @@
 
 
 
-// TODO HIDE FLASH MESSAGES
-$(document).ready(
-  $(".alert-info").hide(2000, function() {
+
+$(document).on('turbolinks:load', function () {
+  $(".alert-info").hide(3500, function () {
     $(this).remove();
-  }))
+  }
+)});

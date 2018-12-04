@@ -4,7 +4,7 @@ class Community < ApplicationRecord
 
   CATEGORY_COMMUNITY = %w[ Technologies Game Jokes Cars For girls For mans Study ]
   validates :category, presence: true, inclusion: { in: CATEGORY_COMMUNITY }
-  validates :name, presence: true, uniqueness: true, length: { in: 2..15 }
+  validates :name, presence: true, uniqueness: true, length: { in: 2..25 }
 
   belongs_to :owner, class_name: "User", foreign_key: "user_id"
   has_many :subscribes, dependent: :destroy

@@ -5,5 +5,5 @@ class MailBoxesController < ApplicationController
     @mails = current_user.mail_box.messages
   end
 end
-index list messages from user's
-show collection messages from user
+# index list messages from user's
+# show collection messages from user
