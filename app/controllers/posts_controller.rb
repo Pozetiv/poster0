@@ -4,7 +4,7 @@ class PostsController < ApplicationController
   before_action :check_owner, only: [:edit, :update, :destroy]
 
   def index
-    params[:search] ? @posts = Post.search(params[:search]) : @posts ||= Post.all
+    params[:search] ? @posts = Post.search(params[:search][:search_text]) : @posts = Post.all
     @communities ||= Community.popular_communities_mini
   end
 
@@ -21,7 +21,6 @@ class PostsController < ApplicationController
 
   def create
     @post = current_user.posts.new(post_params)
-
     respond_to do |format|
       if @post.save
         format.html { redirect_to @post, info: 'Post was successfully created.' }

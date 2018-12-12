@@ -11,7 +11,7 @@
           .post__body.d-flex.flex-column
             = post.title
             .post__body_image
-              = link_to (image_tag post.image.url(:thumb), class: 'img-fluid img-thumbnail' if post.image?), post_path(post)
+              = link_to (image_tag post.image.url(:thumb), class: 'img-fluid img-thumbnail mx-auto' if post.image?), post_path(post)
             = post.body if post.body?
           .post__footer.text-secondary
             Comments

@@ -16,14 +16,15 @@ class Post < ApplicationRecord
 
   default_scope { order(created_at: :desc) }
   scope :user_subscribes_posts, -> (user_id) { joins( community: :subscribes ).where(user_id: user_id) }
-  scope :posts_user, -> (user) { joins(:user).where("users.nick like ?", "%#{user}%") if user.present? }
-  scope :posts_community, -> (community) { joins( :community ).where( "communities.name like ?", "%#{community}%") if community.present? }
-  scope :most_liked, -> { joins(:acts_as_votable).order(cached_votes_total: :desc) }
+  scope :posts_user, -> (user) { joins(:user).where("users.nick like ?", "%#{user}%") }
+  scope :posts_community, -> (community) { joins( :community ).where( "communities.name like ?", "%#{community}%") }
+  scope :most_liked, -> { joins( :acts_as_votable ).order(cached_votes_total: :desc) }
   ##FIX MOST_liked
-  scope :post_by_category, -> (category) { joins{:community}.where("Community.category like ?", "%#{category}%") if category.present? }
+  scope :post_by_category, -> (category) { joins( :community ).where("communities.category like ?", "%#{category}%") if category.present? }
 
-  def search(params)
-    self.posts_user(params[:search_text]).posts_community(params[:search_text]).post_by_category(params[:search_text])
+  def self.search(params)
+    params.rstrip!
+    self.posts_user(params).union(posts_community(params))
   end
 end
 ##TODO add key velue to radis

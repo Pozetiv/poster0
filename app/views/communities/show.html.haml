@@ -44,16 +44,16 @@
         .community__buttoms
           = link_to 'Edit', edit_community_path(@community)
           = link_to 'Destory', community_path(@community), method: :delete, data: { confirm: "Do you want delete #{@community.name}" }
-  .panel_block.community_rules.mb-2
+  .panel_block.community_rules.mb-2.pb-1
     .community_rulex_hader.text-center
-      COMMUNITY DERAILS
+      COMMUNITY DETAILS
     .communtiy_rules_list.px-1
       %ol
         -@rules.each do |rule|
           %li
             %strong= rule.title
           = rule.text
-  .panel_block.community_moderation
+  .panel_block.community_moderation.pb-1
     .community_moderation__header.text-center
       MODERATORS
     .community_moderation_list.px-1

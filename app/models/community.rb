@@ -18,6 +18,7 @@ class Community < ApplicationRecord
 
   scope :popular_communities, -> { left_outer_joins(:subscribes).group('communities.id').order('COUNT(subscribes.community_id) DESC') }
   scope :popular_communities_mini, -> { popular_communities.limit(5) }
+  
 
   after_save :subscribe_owner
 
