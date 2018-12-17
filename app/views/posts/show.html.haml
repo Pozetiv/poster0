@@ -10,7 +10,7 @@
     .post.d-flex.flex-column.pb-2
       .post__header
         = @post.community.name + ' Published by ' + @post.user.nick + ' ' + time_ago_in_words(@post[:created_at])
-      .post__body
+      .post__body.text-center
         = image_tag @post.image.url(:thumb), class: 'img-thumbnail mx-auto' if @post.image?
         %br
         = @post.body if @post.body.present?
@@ -20,8 +20,8 @@
           = link_to 'Delete', post_path(@post), method: :delete, class: 'button'
 
     .comment_block
-    - if user_signed_in?
-      %h2 Write commit
-      = render 'comments/form'
+      - if user_signed_in?
+        %h2 Write commit
+        = render 'comments/form'
 
-    = render 'comments/index', locals: { commentable: @post }
+      = render 'comments/index', locals: { commentable: @post }

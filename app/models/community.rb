@@ -12,7 +12,7 @@ class Community < ApplicationRecord
   has_many :users, through: :subscribes
   has_many :posts, dependent: :destroy
   has_many :rules, inverse_of: :community, dependent: :destroy
-  has_many :community_administrations, class_name: 'Community::Administration',dependent: :destroy
+  has_many :community_administrations, class_name: 'Community::Administration', dependent: :destroy
 
   accepts_nested_attributes_for :rules, reject_if: :all_blank, allow_destroy: true
 
@@ -25,7 +25,7 @@ class Community < ApplicationRecord
   mount_uploader :image, CommunityUploader
 
   def administrator?(user)
-    self.community_administrations.find_by(user_id: user) ? true : false
+    self.community_administrations.where(user_id: user).exists?
   end
 
   def owner?(user)

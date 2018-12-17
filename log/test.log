@@ -8791,3 +8791,216 @@ FOREIGN KEY ("community_id")
   [1m[35m (0.2ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
   [1m[36mPost Exists (1.0ms)[0m  [1m[34mSELECT  1 AS one FROM ( (SELECT "posts".* FROM "posts" INNER JOIN "users" ON "users"."id" = "posts"."user_id" WHERE (users.nick like '%something text%') ORDER BY "posts"."created_at" DESC) UNION (SELECT "posts".* FROM "posts" INNER JOIN "communities" ON "communities"."id" = "posts"."community_id" WHERE (communities.name like '%something text%') ORDER BY "posts"."created_at" DESC) ) "posts" LIMIT $1[0m  [["LIMIT", 1]]
   [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (70.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (118.1ms)[0m  [1m[35mALTER TABLE "comments" DISABLE TRIGGER ALL;ALTER TABLE "votes" DISABLE TRIGGER ALL;ALTER TABLE "schema_migrations" DISABLE TRIGGER ALL;ALTER TABLE "ar_internal_metadata" DISABLE TRIGGER ALL;ALTER TABLE "friendly_id_slugs" DISABLE TRIGGER ALL;ALTER TABLE "mail_boxes" DISABLE TRIGGER ALL;ALTER TABLE "subscribes" DISABLE TRIGGER ALL;ALTER TABLE "communities" DISABLE TRIGGER ALL;ALTER TABLE "posts" DISABLE TRIGGER ALL;ALTER TABLE "rules" DISABLE TRIGGER ALL;ALTER TABLE "community_administrations" DISABLE TRIGGER ALL;ALTER TABLE "users" DISABLE TRIGGER ALL[0m
+  [1m[35m (74.9ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (79.9ms)[0m  [1m[34m          SELECT schemaname || '.' || tablename
+          FROM pg_tables
+          WHERE
+            tablename !~ '_prt_' AND
+             tablename <> 'schema_migrations'  AND tablename <> 'ar_internal_metadata'  AND
+            schemaname = ANY (current_schemas(false))
+[0m
+  [1m[35m (33.5ms)[0m  [1m[34mselect table_name from information_schema.views where table_schema = 'poster_test'[0m
+  [1m[35m (1459.1ms)[0m  [1m[35mTRUNCATE TABLE "public"."comments", "public"."votes", "public"."friendly_id_slugs", "public"."mail_boxes", "public"."subscribes", "public"."communities", "public"."posts", "public"."rules", "public"."community_administrations", "public"."users" RESTART IDENTITY CASCADE;[0m
+  [1m[35m (0.4ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (1.1ms)[0m  [1m[35mALTER TABLE "comments" ENABLE TRIGGER ALL;ALTER TABLE "votes" ENABLE TRIGGER ALL;ALTER TABLE "schema_migrations" ENABLE TRIGGER ALL;ALTER TABLE "ar_internal_metadata" ENABLE TRIGGER ALL;ALTER TABLE "friendly_id_slugs" ENABLE TRIGGER ALL;ALTER TABLE "mail_boxes" ENABLE TRIGGER ALL;ALTER TABLE "subscribes" ENABLE TRIGGER ALL;ALTER TABLE "communities" ENABLE TRIGGER ALL;ALTER TABLE "posts" ENABLE TRIGGER ALL;ALTER TABLE "rules" ENABLE TRIGGER ALL;ALTER TABLE "community_administrations" ENABLE TRIGGER ALL;ALTER TABLE "users" ENABLE TRIGGER ALL[0m
+  [1m[35m (4.9ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.3ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.3ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mCommunity Exists (0.8ms)[0m  [1m[34mSELECT  1 AS one FROM "communities" WHERE "communities"."name" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.3ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists (0.7ms)[0m  [1m[34mSELECT  1 AS one FROM "users" WHERE "users"."email" = $1 LIMIT $2[0m  [["email", "user1@us.com"], ["LIMIT", 1]]
+  [1m[36mUser Exists (0.4ms)[0m  [1m[34mSELECT  1 AS one FROM "users" WHERE "users"."nick" = $1 LIMIT $2[0m  [["nick", "user1"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.5ms)[0m  [1m[32mINSERT INTO "users" ("email", "encrypted_password", "created_at", "updated_at", "nick") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["email", "user1@us.com"], ["encrypted_password", "$2a$04$9c0EcM3FBeFIjtDgMN.Vq.8QJU2EzOWLlPxSck.frOzvrVBIIbQRe"], ["created_at", "2018-12-13 12:27:26.884228"], ["updated_at", "2018-12-13 12:27:26.884228"], ["nick", "user1"]]
+  [1m[36mMailBox Load (0.5ms)[0m  [1m[34mSELECT  "mail_boxes".* FROM "mail_boxes" WHERE "mail_boxes"."user_id" = $1 LIMIT $2[0m  [["user_id", 1], ["LIMIT", 1]]
+  [1m[36mMailBox Create (0.6ms)[0m  [1m[32mINSERT INTO "mail_boxes" ("user_id", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["user_id", 1], ["created_at", "2018-12-13 12:27:26.904224"], ["updated_at", "2018-12-13 12:27:26.904224"]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.2ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mCommunity Exists (0.6ms)[0m  [1m[34mSELECT  1 AS one FROM "communities" WHERE "communities"."id" IS NOT NULL AND "communities"."slug" = $1 LIMIT $2[0m  [["slug", "community_name1"], ["LIMIT", 1]]
+  [1m[36mCommunity Exists (0.4ms)[0m  [1m[34mSELECT  1 AS one FROM "communities" WHERE "communities"."name" = $1 LIMIT $2[0m  [["name", "community_name1"], ["LIMIT", 1]]
+  [1m[36mCommunity Create (0.9ms)[0m  [1m[32mINSERT INTO "communities" ("name", "created_at", "updated_at", "slug", "user_id", "category") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["name", "community_name1"], ["created_at", "2018-12-13 12:27:27.013706"], ["updated_at", "2018-12-13 12:27:27.013706"], ["slug", "community_name1"], ["user_id", 1], ["category", "Technologies"]]
+  [1m[36mSubscribe Exists (0.7ms)[0m  [1m[34mSELECT  1 AS one FROM "subscribes" WHERE "subscribes"."community_id" = $1 AND "subscribes"."user_id" = $2 LIMIT $3[0m  [["community_id", 1], ["user_id", 1], ["LIMIT", 1]]
+  [1m[36mSubscribe Create (0.6ms)[0m  [1m[32mINSERT INTO "subscribes" ("user_id", "community_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["user_id", 1], ["community_id", 1], ["created_at", "2018-12-13 12:27:27.077225"], ["updated_at", "2018-12-13 12:27:27.077225"]]
+  [1m[35m (0.3ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mCommunity Exists (0.5ms)[0m  [1m[34mSELECT  1 AS one FROM "communities" WHERE "communities"."name" = $1 AND "communities"."id" != $2 LIMIT $3[0m  [["name", "community_name1"], ["id", 1], ["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.2ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists (0.3ms)[0m  [1m[34mSELECT  1 AS one FROM "users" WHERE "users"."email" = $1 LIMIT $2[0m  [["email", "user2@us.com"], ["LIMIT", 1]]
+  [1m[36mUser Exists (0.2ms)[0m  [1m[34mSELECT  1 AS one FROM "users" WHERE "users"."nick" = $1 LIMIT $2[0m  [["nick", "user2"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.3ms)[0m  [1m[32mINSERT INTO "users" ("email", "encrypted_password", "created_at", "updated_at", "nick") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["email", "user2@us.com"], ["encrypted_password", "$2a$04$ryPC8yNOB5olLTgZ6gyVb.2r4L9yQJV1AHvp8cIZih9qvUMkuU.QG"], ["created_at", "2018-12-13 12:27:27.087469"], ["updated_at", "2018-12-13 12:27:27.087469"], ["nick", "user2"]]
+  [1m[36mMailBox Load (0.2ms)[0m  [1m[34mSELECT  "mail_boxes".* FROM "mail_boxes" WHERE "mail_boxes"."user_id" = $1 LIMIT $2[0m  [["user_id", 2], ["LIMIT", 1]]
+  [1m[36mMailBox Create (0.4ms)[0m  [1m[32mINSERT INTO "mail_boxes" ("user_id", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["user_id", 2], ["created_at", "2018-12-13 12:27:27.089944"], ["updated_at", "2018-12-13 12:27:27.089944"]]
+  [1m[35m (0.2ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.5ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mCommunity Exists (0.3ms)[0m  [1m[34mSELECT  1 AS one FROM "communities" WHERE "communities"."id" IS NOT NULL AND "communities"."slug" = $1 LIMIT $2[0m  [["slug", "community_name2"], ["LIMIT", 1]]
+  [1m[36mCommunity Exists (0.4ms)[0m  [1m[34mSELECT  1 AS one FROM "communities" WHERE "communities"."name" = $1 LIMIT $2[0m  [["name", "community_name2"], ["LIMIT", 1]]
+  [1m[36mCommunity Create (0.3ms)[0m  [1m[32mINSERT INTO "communities" ("name", "created_at", "updated_at", "slug", "user_id", "category") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["name", "community_name2"], ["created_at", "2018-12-13 12:27:27.095251"], ["updated_at", "2018-12-13 12:27:27.095251"], ["slug", "community_name2"], ["user_id", 2], ["category", "For girls"]]
+  [1m[36mSubscribe Exists (0.3ms)[0m  [1m[34mSELECT  1 AS one FROM "subscribes" WHERE "subscribes"."community_id" = $1 AND "subscribes"."user_id" = $2 LIMIT $3[0m  [["community_id", 2], ["user_id", 2], ["LIMIT", 1]]
+  [1m[36mSubscribe Create (0.3ms)[0m  [1m[32mINSERT INTO "subscribes" ("user_id", "community_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["user_id", 2], ["community_id", 2], ["created_at", "2018-12-13 12:27:27.098590"], ["updated_at", "2018-12-13 12:27:27.098590"]]
+  [1m[35m (0.2ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.9ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (1.6ms)[0m  [1m[35mALTER TABLE "comments" DISABLE TRIGGER ALL;ALTER TABLE "votes" DISABLE TRIGGER ALL;ALTER TABLE "schema_migrations" DISABLE TRIGGER ALL;ALTER TABLE "ar_internal_metadata" DISABLE TRIGGER ALL;ALTER TABLE "friendly_id_slugs" DISABLE TRIGGER ALL;ALTER TABLE "mail_boxes" DISABLE TRIGGER ALL;ALTER TABLE "subscribes" DISABLE TRIGGER ALL;ALTER TABLE "communities" DISABLE TRIGGER ALL;ALTER TABLE "posts" DISABLE TRIGGER ALL;ALTER TABLE "rules" DISABLE TRIGGER ALL;ALTER TABLE "community_administrations" DISABLE TRIGGER ALL;ALTER TABLE "users" DISABLE TRIGGER ALL[0m
+  [1m[35m (20.7ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (2.0ms)[0m  [1m[34m          SELECT schemaname || '.' || tablename
+          FROM pg_tables
+          WHERE
+            tablename !~ '_prt_' AND
+             tablename <> 'schema_migrations'  AND tablename <> 'ar_internal_metadata'  AND
+            schemaname = ANY (current_schemas(false))
+[0m
+  [1m[35m (1.3ms)[0m  [1m[34mselect table_name from information_schema.views where table_schema = 'poster_test'[0m
+  [1m[35m (1143.0ms)[0m  [1m[35mTRUNCATE TABLE "public"."comments", "public"."votes", "public"."friendly_id_slugs", "public"."mail_boxes", "public"."subscribes", "public"."communities", "public"."posts", "public"."rules", "public"."community_administrations", "public"."users" RESTART IDENTITY CASCADE;[0m
+  [1m[35m (0.4ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (1.3ms)[0m  [1m[35mALTER TABLE "comments" ENABLE TRIGGER ALL;ALTER TABLE "votes" ENABLE TRIGGER ALL;ALTER TABLE "schema_migrations" ENABLE TRIGGER ALL;ALTER TABLE "ar_internal_metadata" ENABLE TRIGGER ALL;ALTER TABLE "friendly_id_slugs" ENABLE TRIGGER ALL;ALTER TABLE "mail_boxes" ENABLE TRIGGER ALL;ALTER TABLE "subscribes" ENABLE TRIGGER ALL;ALTER TABLE "communities" ENABLE TRIGGER ALL;ALTER TABLE "posts" ENABLE TRIGGER ALL;ALTER TABLE "rules" ENABLE TRIGGER ALL;ALTER TABLE "community_administrations" ENABLE TRIGGER ALL;ALTER TABLE "users" ENABLE TRIGGER ALL[0m
+  [1m[35m (5.0ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.3ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mCommunity Exists (0.4ms)[0m  [1m[34mSELECT  1 AS one FROM "communities" WHERE "communities"."name" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.2ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists (1.0ms)[0m  [1m[34mSELECT  1 AS one FROM "users" WHERE "users"."email" = $1 LIMIT $2[0m  [["email", "user1@us.com"], ["LIMIT", 1]]
+  [1m[36mUser Exists (0.4ms)[0m  [1m[34mSELECT  1 AS one FROM "users" WHERE "users"."nick" = $1 LIMIT $2[0m  [["nick", "user1"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.7ms)[0m  [1m[32mINSERT INTO "users" ("email", "encrypted_password", "created_at", "updated_at", "nick") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["email", "user1@us.com"], ["encrypted_password", "$2a$04$bP1.Mv73fp3fmMZiGlKLfO8AhSPwKKxqXdLYGp/cTgKUM5jvwCDrS"], ["created_at", "2018-12-13 12:28:02.650155"], ["updated_at", "2018-12-13 12:28:02.650155"], ["nick", "user1"]]
+  [1m[36mMailBox Load (0.5ms)[0m  [1m[34mSELECT  "mail_boxes".* FROM "mail_boxes" WHERE "mail_boxes"."user_id" = $1 LIMIT $2[0m  [["user_id", 1], ["LIMIT", 1]]
+  [1m[36mMailBox Create (0.5ms)[0m  [1m[32mINSERT INTO "mail_boxes" ("user_id", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["user_id", 1], ["created_at", "2018-12-13 12:28:02.667500"], ["updated_at", "2018-12-13 12:28:02.667500"]]
+  [1m[35m (0.2ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mCommunity Exists (0.6ms)[0m  [1m[34mSELECT  1 AS one FROM "communities" WHERE "communities"."id" IS NOT NULL AND "communities"."slug" = $1 LIMIT $2[0m  [["slug", "community_name1"], ["LIMIT", 1]]
+  [1m[36mCommunity Exists (0.4ms)[0m  [1m[34mSELECT  1 AS one FROM "communities" WHERE "communities"."name" = $1 LIMIT $2[0m  [["name", "community_name1"], ["LIMIT", 1]]
+  [1m[36mCommunity Create (0.7ms)[0m  [1m[32mINSERT INTO "communities" ("name", "created_at", "updated_at", "slug", "user_id", "category") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["name", "community_name1"], ["created_at", "2018-12-13 12:28:02.744113"], ["updated_at", "2018-12-13 12:28:02.744113"], ["slug", "community_name1"], ["user_id", 1], ["category", "Game"]]
+  [1m[36mSubscribe Exists (0.7ms)[0m  [1m[34mSELECT  1 AS one FROM "subscribes" WHERE "subscribes"."community_id" = $1 AND "subscribes"."user_id" = $2 LIMIT $3[0m  [["community_id", 1], ["user_id", 1], ["LIMIT", 1]]
+  [1m[36mSubscribe Create (0.7ms)[0m  [1m[32mINSERT INTO "subscribes" ("user_id", "community_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["user_id", 1], ["community_id", 1], ["created_at", "2018-12-13 12:28:02.758802"], ["updated_at", "2018-12-13 12:28:02.758802"]]
+  [1m[35m (0.2ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mCommunity Exists (0.5ms)[0m  [1m[34mSELECT  1 AS one FROM "communities" WHERE "communities"."name" = $1 AND "communities"."id" != $2 LIMIT $3[0m  [["name", "community_name1"], ["id", 1], ["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.2ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists (0.2ms)[0m  [1m[34mSELECT  1 AS one FROM "users" WHERE "users"."email" = $1 LIMIT $2[0m  [["email", "user2@us.com"], ["LIMIT", 1]]
+  [1m[36mUser Exists (0.2ms)[0m  [1m[34mSELECT  1 AS one FROM "users" WHERE "users"."nick" = $1 LIMIT $2[0m  [["nick", "user2"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.4ms)[0m  [1m[32mINSERT INTO "users" ("email", "encrypted_password", "created_at", "updated_at", "nick") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["email", "user2@us.com"], ["encrypted_password", "$2a$04$phZKvfZEJFzXaH7ftKrXsugqDl5RZbIHfiZDMftd2P2jwnj34PO02"], ["created_at", "2018-12-13 12:28:02.770823"], ["updated_at", "2018-12-13 12:28:02.770823"], ["nick", "user2"]]
+  [1m[36mMailBox Load (0.2ms)[0m  [1m[34mSELECT  "mail_boxes".* FROM "mail_boxes" WHERE "mail_boxes"."user_id" = $1 LIMIT $2[0m  [["user_id", 2], ["LIMIT", 1]]
+  [1m[36mMailBox Create (0.3ms)[0m  [1m[32mINSERT INTO "mail_boxes" ("user_id", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["user_id", 2], ["created_at", "2018-12-13 12:28:02.773275"], ["updated_at", "2018-12-13 12:28:02.773275"]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mCommunity Exists (0.2ms)[0m  [1m[34mSELECT  1 AS one FROM "communities" WHERE "communities"."id" IS NOT NULL AND "communities"."slug" = $1 LIMIT $2[0m  [["slug", "community_name2"], ["LIMIT", 1]]
+  [1m[36mCommunity Exists (0.2ms)[0m  [1m[34mSELECT  1 AS one FROM "communities" WHERE "communities"."name" = $1 LIMIT $2[0m  [["name", "community_name2"], ["LIMIT", 1]]
+  [1m[36mCommunity Create (0.2ms)[0m  [1m[32mINSERT INTO "communities" ("name", "created_at", "updated_at", "slug", "user_id", "category") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["name", "community_name2"], ["created_at", "2018-12-13 12:28:02.776876"], ["updated_at", "2018-12-13 12:28:02.776876"], ["slug", "community_name2"], ["user_id", 2], ["category", "Study"]]
+  [1m[36mSubscribe Exists (0.4ms)[0m  [1m[34mSELECT  1 AS one FROM "subscribes" WHERE "subscribes"."community_id" = $1 AND "subscribes"."user_id" = $2 LIMIT $3[0m  [["community_id", 2], ["user_id", 2], ["LIMIT", 1]]
+  [1m[36mSubscribe Create (0.5ms)[0m  [1m[32mINSERT INTO "subscribes" ("user_id", "community_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["user_id", 2], ["community_id", 2], ["created_at", "2018-12-13 12:28:02.779514"], ["updated_at", "2018-12-13 12:28:02.779514"]]
+  [1m[35m (0.2ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mCommunity::Administration Exists (0.4ms)[0m  [1m[34mSELECT  1 AS one FROM "community_administrations" WHERE "community_administrations"."community_id" = $1 AND "community_administrations"."user_id" = $2 LIMIT $3[0m  [["community_id", 2], ["user_id", 2], ["LIMIT", 1]]
+  [1m[35m (0.4ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.9ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (2.1ms)[0m  [1m[35mALTER TABLE "comments" DISABLE TRIGGER ALL;ALTER TABLE "votes" DISABLE TRIGGER ALL;ALTER TABLE "schema_migrations" DISABLE TRIGGER ALL;ALTER TABLE "ar_internal_metadata" DISABLE TRIGGER ALL;ALTER TABLE "friendly_id_slugs" DISABLE TRIGGER ALL;ALTER TABLE "mail_boxes" DISABLE TRIGGER ALL;ALTER TABLE "subscribes" DISABLE TRIGGER ALL;ALTER TABLE "communities" DISABLE TRIGGER ALL;ALTER TABLE "posts" DISABLE TRIGGER ALL;ALTER TABLE "rules" DISABLE TRIGGER ALL;ALTER TABLE "community_administrations" DISABLE TRIGGER ALL;ALTER TABLE "users" DISABLE TRIGGER ALL[0m
+  [1m[35m (12.6ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (2.2ms)[0m  [1m[34m          SELECT schemaname || '.' || tablename
+          FROM pg_tables
+          WHERE
+            tablename !~ '_prt_' AND
+             tablename <> 'schema_migrations'  AND tablename <> 'ar_internal_metadata'  AND
+            schemaname = ANY (current_schemas(false))
+[0m
+  [1m[35m (1.2ms)[0m  [1m[34mselect table_name from information_schema.views where table_schema = 'poster_test'[0m
+  [1m[35m (1220.2ms)[0m  [1m[35mTRUNCATE TABLE "public"."comments", "public"."votes", "public"."friendly_id_slugs", "public"."mail_boxes", "public"."subscribes", "public"."communities", "public"."posts", "public"."rules", "public"."community_administrations", "public"."users" RESTART IDENTITY CASCADE;[0m
+  [1m[35m (0.4ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (1.0ms)[0m  [1m[35mALTER TABLE "comments" ENABLE TRIGGER ALL;ALTER TABLE "votes" ENABLE TRIGGER ALL;ALTER TABLE "schema_migrations" ENABLE TRIGGER ALL;ALTER TABLE "ar_internal_metadata" ENABLE TRIGGER ALL;ALTER TABLE "friendly_id_slugs" ENABLE TRIGGER ALL;ALTER TABLE "mail_boxes" ENABLE TRIGGER ALL;ALTER TABLE "subscribes" ENABLE TRIGGER ALL;ALTER TABLE "communities" ENABLE TRIGGER ALL;ALTER TABLE "posts" ENABLE TRIGGER ALL;ALTER TABLE "rules" ENABLE TRIGGER ALL;ALTER TABLE "community_administrations" ENABLE TRIGGER ALL;ALTER TABLE "users" ENABLE TRIGGER ALL[0m
+  [1m[35m (5.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.3ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mCommunity Exists (0.7ms)[0m  [1m[34mSELECT  1 AS one FROM "communities" WHERE "communities"."name" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  [1m[35m (0.3ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.2ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists (0.8ms)[0m  [1m[34mSELECT  1 AS one FROM "users" WHERE "users"."email" = $1 LIMIT $2[0m  [["email", "user1@us.com"], ["LIMIT", 1]]
+  [1m[36mUser Exists (0.3ms)[0m  [1m[34mSELECT  1 AS one FROM "users" WHERE "users"."nick" = $1 LIMIT $2[0m  [["nick", "user1"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.8ms)[0m  [1m[32mINSERT INTO "users" ("email", "encrypted_password", "created_at", "updated_at", "nick") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["email", "user1@us.com"], ["encrypted_password", "$2a$04$DLlnJ.ecY3g2OBmf1gsJN.2uSukt4YDFRMQ50BRS8z5x.APrlZJoO"], ["created_at", "2018-12-13 12:28:29.441248"], ["updated_at", "2018-12-13 12:28:29.441248"], ["nick", "user1"]]
+  [1m[36mMailBox Load (0.5ms)[0m  [1m[34mSELECT  "mail_boxes".* FROM "mail_boxes" WHERE "mail_boxes"."user_id" = $1 LIMIT $2[0m  [["user_id", 1], ["LIMIT", 1]]
+  [1m[36mMailBox Create (0.6ms)[0m  [1m[32mINSERT INTO "mail_boxes" ("user_id", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["user_id", 1], ["created_at", "2018-12-13 12:28:29.471020"], ["updated_at", "2018-12-13 12:28:29.471020"]]
+  [1m[35m (0.2ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.2ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mCommunity Exists (0.6ms)[0m  [1m[34mSELECT  1 AS one FROM "communities" WHERE "communities"."id" IS NOT NULL AND "communities"."slug" = $1 LIMIT $2[0m  [["slug", "community_name1"], ["LIMIT", 1]]
+  [1m[36mCommunity Exists (0.3ms)[0m  [1m[34mSELECT  1 AS one FROM "communities" WHERE "communities"."name" = $1 LIMIT $2[0m  [["name", "community_name1"], ["LIMIT", 1]]
+  [1m[36mCommunity Create (0.4ms)[0m  [1m[32mINSERT INTO "communities" ("name", "created_at", "updated_at", "slug", "user_id", "category") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["name", "community_name1"], ["created_at", "2018-12-13 12:28:29.563712"], ["updated_at", "2018-12-13 12:28:29.563712"], ["slug", "community_name1"], ["user_id", 1], ["category", "Jokes"]]
+  [1m[36mSubscribe Exists (0.6ms)[0m  [1m[34mSELECT  1 AS one FROM "subscribes" WHERE "subscribes"."community_id" = $1 AND "subscribes"."user_id" = $2 LIMIT $3[0m  [["community_id", 1], ["user_id", 1], ["LIMIT", 1]]
+  [1m[36mSubscribe Create (0.6ms)[0m  [1m[32mINSERT INTO "subscribes" ("user_id", "community_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["user_id", 1], ["community_id", 1], ["created_at", "2018-12-13 12:28:29.576566"], ["updated_at", "2018-12-13 12:28:29.576566"]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mCommunity Exists (0.5ms)[0m  [1m[34mSELECT  1 AS one FROM "communities" WHERE "communities"."name" = $1 AND "communities"."id" != $2 LIMIT $3[0m  [["name", "community_name1"], ["id", 1], ["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.2ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists (0.4ms)[0m  [1m[34mSELECT  1 AS one FROM "users" WHERE "users"."email" = $1 LIMIT $2[0m  [["email", "user2@us.com"], ["LIMIT", 1]]
+  [1m[36mUser Exists (0.3ms)[0m  [1m[34mSELECT  1 AS one FROM "users" WHERE "users"."nick" = $1 LIMIT $2[0m  [["nick", "user2"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.4ms)[0m  [1m[32mINSERT INTO "users" ("email", "encrypted_password", "created_at", "updated_at", "nick") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["email", "user2@us.com"], ["encrypted_password", "$2a$04$a/oMhhkLtvcKBcFtul/p5OYCuu8RDnDFSfRg.IzH2VsDgek8KQIPO"], ["created_at", "2018-12-13 12:28:29.586995"], ["updated_at", "2018-12-13 12:28:29.586995"], ["nick", "user2"]]
+  [1m[36mMailBox Load (0.3ms)[0m  [1m[34mSELECT  "mail_boxes".* FROM "mail_boxes" WHERE "mail_boxes"."user_id" = $1 LIMIT $2[0m  [["user_id", 2], ["LIMIT", 1]]
+  [1m[36mMailBox Create (0.3ms)[0m  [1m[32mINSERT INTO "mail_boxes" ("user_id", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["user_id", 2], ["created_at", "2018-12-13 12:28:29.589594"], ["updated_at", "2018-12-13 12:28:29.589594"]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mCommunity Exists (0.4ms)[0m  [1m[34mSELECT  1 AS one FROM "communities" WHERE "communities"."id" IS NOT NULL AND "communities"."slug" = $1 LIMIT $2[0m  [["slug", "community_name2"], ["LIMIT", 1]]
+  [1m[36mCommunity Exists (0.4ms)[0m  [1m[34mSELECT  1 AS one FROM "communities" WHERE "communities"."name" = $1 LIMIT $2[0m  [["name", "community_name2"], ["LIMIT", 1]]
+  [1m[36mCommunity Create (0.3ms)[0m  [1m[32mINSERT INTO "communities" ("name", "created_at", "updated_at", "slug", "user_id", "category") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["name", "community_name2"], ["created_at", "2018-12-13 12:28:29.594026"], ["updated_at", "2018-12-13 12:28:29.594026"], ["slug", "community_name2"], ["user_id", 2], ["category", "For mans"]]
+  [1m[36mSubscribe Exists (0.3ms)[0m  [1m[34mSELECT  1 AS one FROM "subscribes" WHERE "subscribes"."community_id" = $1 AND "subscribes"."user_id" = $2 LIMIT $3[0m  [["community_id", 2], ["user_id", 2], ["LIMIT", 1]]
+  [1m[36mSubscribe Create (0.3ms)[0m  [1m[32mINSERT INTO "subscribes" ("user_id", "community_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["user_id", 2], ["community_id", 2], ["created_at", "2018-12-13 12:28:29.596714"], ["updated_at", "2018-12-13 12:28:29.596714"]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mCommunity::Administration Load (0.5ms)[0m  [1m[34mSELECT "community_administrations".* FROM "community_administrations" WHERE "community_administrations"."community_id" = $1[0m  [["community_id", 2]]
+  [1m[36mCommunity::Administration Exists (0.6ms)[0m  [1m[34mSELECT  1 AS one FROM "community_administrations" WHERE "community_administrations"."community_id" = $1 AND "community_administrations"."user_id" = $2 LIMIT $3[0m  [["community_id", 2], ["user_id", 2], ["LIMIT", 1]]
+  [1m[35m (0.4ms)[0m  [1m[31mROLLBACK[0m

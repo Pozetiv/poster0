@@ -48,7 +48,7 @@ RSpec.describe Post, type: :model do
     # it '.post_by_category' do
     #   ##FIX
     #   binding.pry
-    #   expect(Post.post_by_category(post.community.category)).to eq(post.)
+    #   expect(Post.post_by_category(post.community.category)).to eq(post)
     # end
   end
 end

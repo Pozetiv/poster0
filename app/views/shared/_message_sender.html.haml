@@ -1,0 +1,5 @@
+= user_avar(object.user)
+= link_to object.user.nick, user_profile_path(object.user)
+= status_user(object.user)
+= link_to  new_user_mail_boxes_direct_message_path(object.user) do
+  %i.far.fa-envelope-open
