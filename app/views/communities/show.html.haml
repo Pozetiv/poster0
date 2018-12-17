@@ -26,7 +26,7 @@
 - else
   %h2 Don't find post
 - content_for :right_panel do
-  .community_details.mb-2
+  .panel_block.community_details.mb-2
     .community_details__header.text-center
       COMMUNITY DETAILS
     .community_details__main-block.d-flex.flex-column.p-2
@@ -44,16 +44,19 @@
         .community__buttoms
           = link_to 'Edit', edit_community_path(@community)
           = link_to 'Destory', community_path(@community), method: :delete, data: { confirm: "Do you want delete #{@community.name}" }
-  .community_rules.mb-2
+
+  .panel_block.community_rules.mb-2.pb-1
     .community_rulex_hader.text-center
-      COMMUNITY DERAILS
+      COMMUNITY DETAILS
+
     .communtiy_rules_list.px-1
       %ol
         -@rules.each do |rule|
           %li
             %strong= rule.title
           = rule.text
-  .community_moderation
+
+  .panel_block.community_moderation.pb-1
     .community_moderation__header.text-center
       MODERATORS
     .community_moderation_list.px-1

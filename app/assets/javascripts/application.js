@@ -25,5 +25,8 @@
 $(document).on('turbolinks:load', function () {
   $(".alert-info").hide(3500, function () {
     $(this).remove();
-  }
-)});
+  });
+  $(".alert").hide(5000, function(){
+    $(this).remove();
+  });
+});

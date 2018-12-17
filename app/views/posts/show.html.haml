@@ -6,21 +6,22 @@
     = button_to  down_voted_path, params: { id: @post.id } do
       %i.fas.fa-chevron-down
 
-  .post.d-flex.flex-column.pb-2
-    .post__header
-      = @post.community.name + ' Published by ' + @post.user.nick + ' ' + time_ago_in_words(@post[:created_at])
-    .post__body
-      = image_tag @post.image.url(:thumb), class: 'img-thumbnail' if @post.image?
-      %br
-      = @post.body if @post.body.present?
-      %br
-      - if user_signed_in? && owner(@post)
-        = link_to "Edit", edit_post_path(@post), class: "button"
-        = link_to 'Delete', post_path(@post), method: :delete, class: 'button'
+  .main.d-flex.flex-column.pb-2
+    .post.d-flex.flex-column.pb-2
+      .post__header
+        = @post.community.name + ' Published by ' + @post.user.nick + ' ' + time_ago_in_words(@post[:created_at])
+      .post__body.text-center
+        = image_tag @post.image.url(:thumb), class: 'img-thumbnail mx-auto' if @post.image?
+        %br
+        = @post.body if @post.body.present?
+        %br
+        - if user_signed_in? && owner(@post)
+          = link_to "Edit", edit_post_path(@post), class: "button"
+          = link_to 'Delete', post_path(@post), method: :delete, class: 'button'
 
     .comment_block
-    - if user_signed_in?
-      %h2 Write commit
-      = render 'comments/form'
+      - if user_signed_in?
+        %h2 Write commit
+        = render 'comments/form'
 
-    = render 'comments/index', locals: { commentable: @post }
+      = render 'comments/index', locals: { commentable: @post }

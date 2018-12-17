@@ -5,4 +5,9 @@
   background: white;
   margin-top: 2%;
   border-radius: 3px;
+  flex-basis: 50%;
+}
+
+.comment_body{
+  overflow: hidden;
 }

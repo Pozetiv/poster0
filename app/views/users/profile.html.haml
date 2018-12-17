@@ -1,3 +1,14 @@
-.profile.d-flex.flex-column
-  .profile__lables
-    image
+- content_for :right_panel do
+  .profile.panel_block.d-flex.justify-content-center.text-center
+    .profile__lables.d-flex.flex-column.my-2
+      = user_avar(@user)
+      = @user.nick
+      .label_information.d-flex.justify-content-around
+        .karma
+          Karma 
+          %br
+          #{@user.karma}
+        .cake_day    
+          Cake day 
+          %br
+          #{@user.created_at.to_date.strftime("%d %B, %Y")}

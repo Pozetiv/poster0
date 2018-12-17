@@ -1,0 +1,4 @@
+= simple_form_for([@mail_box, @mail_box.messages.build], url: user_mail_boxes_direct_messages_path ) do |f|
+  .form_group
+    = f.input :body, as: :text, label: false, input_html: { class: 'form-control' }, wrapper: false, placeholder: 'Text direct message ...'
+  = f.button :submit, class: 'button'
