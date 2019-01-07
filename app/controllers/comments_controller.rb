@@ -1,5 +1,5 @@
 class CommentsController < ApplicationController
-  before_action :load_commentable
+  before_action :find_commentable
   before_action :owner_comment, only: [:destroy]
   before_action :find_comment, only: [:destroy, :update, :edit]
   before_action :authenticate_user!, expect: [:index]
@@ -16,27 +16,27 @@ class CommentsController < ApplicationController
     @comment = @commentable.comments.new(comments_params)
     @comment.user = current_user
     if @comment.save
-      redirect_to @commentable
+      redirect_back(fallback_location: root_path)
     else
-      redirect_to @commentable
+      redirect_back(fallback_location: root_path)
     end
   end
 
   def edit; end
 
-  def update 
+  def update
     if @comment.update_attributes(comments_params)
-      redirect_to @commentable
+      redirect_back(fallback_location: root_path )
     else
-      redirect_to @commentable
+      redirect_back(fallback_location: root_path)
     end
   end
 
   def destroy
     if @comment.destroy
-      redirect_to @commentable
+      redirect_back(fallback_location: root_path)
     else
-      redirect_to @commentable, danger: "Opps we can't destroy comment"
+      redirect_back(fallback_location: root_path)
     end
   end
 
@@ -46,9 +46,9 @@ class CommentsController < ApplicationController
     params.require(:comment).permit(:body)
   end
 
-  def load_commentable
-    resource, id = request.path.split('/')[1, 2]
-    @commentable = resource.singularize.classify.constantize.find(id)
+  def find_commentable
+    @commentable = Comment.find(params[:comment_id]) if params[:comment_id]
+    @commentable = Post.find(params[:post_id]) if params[:post_id]
   end
 
   def find_comment
@@ -58,8 +58,7 @@ class CommentsController < ApplicationController
   def owner_comment
     find_comment
     unless @comment.user == current_user || current_user.admin? == true
-      redirect_to @commentable
-      flash.now[:danger] = "Sorry, you're not owners commet"
+      redirect_to @commentable, danger: "Sorry, you're not owners commet"
     end
   end
 end

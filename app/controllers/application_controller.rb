@@ -3,6 +3,10 @@ class ApplicationController < ActionController::Base
   add_flash_types :primary, :warning, :danger, :success, :info
   before_action :set_online_user
 
+  rescue_from ActiveRecord::RecordNotFound  do
+    render file: 'public/404.html', status: 404
+  end
+
   protected
 
   def configure_permitted_parameters

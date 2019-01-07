@@ -3,6 +3,10 @@
     .profile__lables.d-flex.flex-column.my-2
       = user_avar(@user)
       = @user.nick
+      = status_user(@user)
+      - if user_signed_in?
+        = link_to conversations_path(sender_id: current_user.id, receiver_id: @user.id), method: :post do
+          %i.far.fa-envelope-open
       .label_information.d-flex.justify-content-around
         .karma
           Karma 

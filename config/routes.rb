@@ -1,12 +1,18 @@
 Rails.application.routes.draw do
+  get 'messages/index'
+  get 'conversations/index'
   root "posts#index"
 
   resources :posts do
-    resources :comments, except: [:show] do
-       member do
-        get :replies
-      end
-    end
+    resources :comments, except: [:show]
+  end
+
+  resources :comments do
+    resources :comments, except: [:show]
+  end
+
+  resources :conversations, only: [:index, :create] do
+    resources :messages, only: [:index, :create]
   end
 
   resources :communities do
@@ -20,9 +26,9 @@ Rails.application.routes.draw do
 
   devise_for :users
   resources :users do
-    resource :mail_boxes, only: [:show] do
-      resources :direct_messages, only: [:new, :create, :destroy]
-    end
+    # resource :mail_boxes, only: [:show] do
+    #   resources :direct_messages, only: [:new, :create, :destroy]
+    # end
     get 'profile', to: 'users#profile'
   end
 

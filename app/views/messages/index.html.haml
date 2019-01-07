@@ -1,0 +1,14 @@
+- if @messages.any?
+  .messages.mb-3
+    - @messages.each do |message|
+      - if message.body
+        .media.mb-2
+          = link_to user_avar(message.user), user_profile_path(message.user)
+          .media-body.ml-2
+            %smaill.mt-0 #{message.user.nick} Wroted: #{message.time}
+            %p #{message.body}
+        %hr
+
+= simple_form_for [@conversation, @message], url: conversation_messages_path do |f| 
+  = f.input :body, as: :text, label: false, placeholder: 'Your message'
+  = f.button :submit, 'Send', class: 'btn-lg btn-block'

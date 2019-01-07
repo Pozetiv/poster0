@@ -19,9 +19,6 @@
 //= require bootstrap-sprockets
 //= require cocoon
 
-
-
-
 $(document).on('turbolinks:load', function () {
   $(".alert-info").hide(3500, function () {
     $(this).remove();
@@ -30,4 +27,3 @@ $(document).on('turbolinks:load', function () {
     $(this).remove();
   });
 });
-

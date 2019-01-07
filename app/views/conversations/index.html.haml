@@ -1,0 +1,16 @@
+%h2 Mail Box
+- if @conversations.any?
+  .chating
+    - @conversations.each do |conversation|
+      %div{class: "chat_#{conversation.id} d-flex "}
+        .sender.d-flex.flex-column.text-center
+          = link_to user_avar(conversation.recipient(current_user)), user_profile_path(conversation.recipient(current_user))
+          = link_to conversation.recipient(current_user).nick, conversation_messages_path(conversation)
+        .last_message.ml-2.d-flex.align-content-center.flex-wrap
+          = conversation.messages.last.body.truncate(50)
+          = link_to 'Read more', conversation_messages_path(conversation), class: 'align-self-end'
+      %hr    
+- else
+  Your haven't got any mails
+
+   

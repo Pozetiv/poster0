@@ -39,6 +39,6 @@ class Community < ApplicationRecord
   private
   
   def subscribe_owner
-    self.subscribes.create(user: self.owner )
+    self.subscribes.create( user: self.owner )
   end
 end
