@@ -8,12 +8,14 @@ module ApplicationHelper
   end
 
   def owner(object)
-    object.user == current_user || current_user.admin?
+    if user_signed_in?
+      object.user == current_user || current_user.admin?
+    end
   end
 
   def voter_system_button(object)
-    button_to "UP", up_voted_path, params: { id: @post.id }
-    button_to  down_voted_path, params: { id: @post.id }
+    button_to up_voted_path, params: { id: @post.id }
+    button_to down_voted_path, params: { id: @post.id }
     ##TODO active button color
   end
 end

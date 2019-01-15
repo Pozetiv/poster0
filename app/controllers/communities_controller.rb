@@ -64,8 +64,6 @@ class CommunitiesController < ApplicationController
 
   def set_community
     @community ||= Community.friendly.find(params[:id])
-  rescue ActiveRecord::RecordNotFound
-    render file: 'public/404.html'
   end
 
   def owner

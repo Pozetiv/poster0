@@ -1,6 +1,6 @@
 .content.px-2
   - if @posts.any?
-    -@posts.each do |post|
+    - @posts.each do |post|
       .post.d-flex.flex-row-reverse.mb-3.justify-content-end
         .post__container.d-flex.flex-column.px-2
           .post__header
@@ -17,12 +17,9 @@
             Comments
             = link_to  post_path(post), class: 'text-secondary' do
               %i.fas.fa-comments #{post.comments.count}
-        .post__vote.px-2.pt-4
-          = button_to  up_voted_path, params: { id: post.id } do
-            %i.fas.fa-chevron-up
-          = post.votes_for.size
-          = button_to  down_voted_path, params: { id: post.id } do
-            %i.fas.fa-chevron-down
+        .post__vote.px-2.pt-4.text-center
+          = render partial: 'vote_part', locals: { post: post }
+    = will_paginate @posts, renderer: WillPaginate::ActionView::BootstrapLinkRenderer, list_classes: %w(pagination justify-content-center)
   - else
     %h2 Don't find post
 - content_for :right_panel do

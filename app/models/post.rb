@@ -15,16 +15,23 @@ class Post < ApplicationRecord
   friendly_id :title, :use => [:slugged, :finders]
 
   default_scope { order(created_at: :desc) }
-  scope :user_subscribes_posts, -> (user_id) { joins( community: :subscribes ).where(user_id: user_id) }
+  scope :user_subscribes_posts, -> (user_id) { joins(community: :subscribes).where(user_id: user_id) }
   scope :posts_user, -> (user) { joins(:user).where("users.nick like ?", "%#{user}%") }
-  scope :posts_community, -> (community) { joins( :community ).where( "communities.name like ?", "%#{community}%") }
-  scope :most_liked, -> { joins( :acts_as_votable ).order(cached_votes_total: :desc) }
-  ##FIX MOST_liked
-  scope :post_by_category, -> (category) { joins( :community ).where("communities.category like ?", "%#{category}%") if category.present? }
+  scope :posts_community, -> (community) { joins(:community).where( "communities.name like ?", "%#{community}%") }
+  scope :most_liked, -> { reorder(cached_weighted_average: :desc).limit(25) }
+  scope :most_popular, -> { reorder(cached_votes_total: :desc ).limit(25) }
+  scope :trend_day, -> do most_liked.where("created_at >= :begin_day and created_at <= :finish_day", 
+    { begin_day: DateTime.now.utc.beginning_of_day, finish_day: DateTime.now.utc.end_of_day })
+  end
+  scope :trend_month, -> do most_liked.where("created_at >= :begin_month and created_at <= :finish_month",
+    { begin_month: DateTime.now.utc.beginning_of_month, finish_month: DateTime.now.utc.end_of_month })
+  end
+  scope :post_by_category, -> (category) { joins(:community).where("communities.category like ?", "%#{category}%") if category.present? }
+
+  self.per_page = 30
 
   def self.search(params)
     params.rstrip!
     self.posts_user(params).union(posts_community(params))
   end
 end
-##TODO add key velue to radis

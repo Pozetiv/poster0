@@ -58,14 +58,14 @@ Rails.application.configure do
 
   # Use a different cache store in production.
   # config.cache_store = :mem_cache_store
-    config.cache_store = :redis_store, "redis://localhost:6379/0/cache", { expires_in: 90.minutes }
+    config.cache_store = :redis_store, ENV['REDIS_STORE'], { expires_in: 90.minutes }
     config.action_dispatch.rack_cache = {
-      metastore: "redis://localhost:6379/1/metastore",
-      entitystore: "redis://localhost:6379/1/entitystore"
+      metastore: ENV['rack_cache_metastore'],
+      entitystore: ENV['rack_cache_entitystore']
       }
 
   # Use a real queuing backend for Active Job (and separate queues per environment)
-  # config.active_job.queue_adapter     = :resque
+  config.active_job.queue_adapter     = :sidekiq
   # config.active_job.queue_name_prefix = "poster_#{Rails.env}"
 
   config.action_mailer.perform_caching = false

@@ -7,7 +7,25 @@
         .information.mr-auto
           %small Wrote: #{time_ago_in_words(comment.created_at)}
         .information__buttons.ml-auto
-          = link_to raw('<i class="fas fa-highlighter"></i>'), edit_post_comment_path(@commentable, comment.id)
-          = link_to raw('<i class="fas fa-times"></i>'),  post_comment_path(@commentable, comment.id), method: :delete, data: { confirm: 'Do you want delete commit?' }
-      .comment_body.d-flex.flex-wrap
+          - if owner(comment)
+            = link_to raw('<i class="fas fa-highlighter"></i>'), edit_post_comment_path(@commentable, comment.id)
+            = link_to raw('<i class="fas fa-times"></i>'),  post_comment_path(@commentable, comment.id), method: :delete, data: { confirm: 'Do you want delete commit?' }
+      .comment__body.d-flex.flex-wrap.text-justify
         = comment.body
+      .comment__footer.mt-auto
+        = link_to 'Reply', '#', id: 'reply_click'
+        = simple_form_for [comment, Comment.new] do |reply|
+          = reply.input :body, placeholder: "Text a reply", label: false
+          = reply.button :submit
+        - if comment.comments.any?
+          .comment__reply
+            -comment.comments.each do |reply|
+              %div{ class: "comment-#{comment.id} d-flex flex-row p-2" }
+                .commentable__info.d-flex.flex-column.text-center.pr-2
+                  = render 'shared/message_sender', object: reply
+                .comment__main_part.d-flex.flex-column.flex-wrap
+                  .comment__main__info.d-flex
+                    .information.mr-auto
+                      %small Wrote: #{time_ago_in_words(reply.created_at)}
+                  .comment__body.d-flex.flex-wrap.text-justify
+                    = reply.body

@@ -1,14 +1,13 @@
 class Comment < ApplicationRecord
   belongs_to :commentable, polymorphic: true
   belongs_to :user
-  has_many :comments, as: :commentable
+  has_many :comments, class_name: 'Comment', as: :commentable, dependent: :destroy
 
-  validates :body, presence: true, format: { with: /\A[a-zA-Z0-9@!]+*\z/ }
+  validates :body, presence: true, length: { minimum: 2 }
 
   default_scope { order(created_at: :desc) }
 
-  def self.replies(text, user)
-    self.replies.create(body: text, user: user)
+  def time
+    created_at.strftime("%d/%m/%y at %l:%M %p")
   end
 end
-##TODO VIES TO NESTED comments replies

@@ -1,16 +1,16 @@
 class PostsController < ApplicationController
   before_action :set_post, only: [:show, :edit, :update, :destroy, :up_voted, :down_voted]
   before_action :authenticate_user!, except: [:index, :show]
-  before_action :check_owner, only: [:edit, :update, :destroy]
+  before_action :check_owner || :admin, only: [:edit, :update, :destroy]
 
   def index
-    params[:search] ? @posts = Post.search(params[:search][:search_text]) : @posts = Post.all
+    params[:search] ? @posts = Post.search(params[:search][:search_text]).paginate(:page => params[:page]) : @posts = Post.paginate(:page => params[:page])
     @communities ||= Community.popular_communities_mini
   end
 
   def show
-     @commentable = @post
-     @comments = @commentable.comments
+    @commentable = @post
+    @comments = @commentable.comments
   end
 
   def new
@@ -53,12 +53,12 @@ class PostsController < ApplicationController
   end
 
   def up_voted
-    current_user.likes(@post)
+    @post.upvote_from(current_user)
     redirect_back(fallback_location: root_path)
   end
 
   def down_voted
-    @post.downvote_from current_user
+    @post.downvote_from(current_user)
     redirect_back(fallback_location: root_path)
   end
 
@@ -67,8 +67,6 @@ class PostsController < ApplicationController
 
     def set_post
       @post ||= Post.friendly.find(params[:id])
-    rescue ActiveRecord::RecordNotFound
-      render file: 'public/404.html'
     end
 
     def post_params

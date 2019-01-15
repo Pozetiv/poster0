@@ -1,10 +1,6 @@
 .d-flex.justify-content-center
-  .votted
-    = button_to  up_voted_path, params: { id: @post.id } do
-      %i.fas.fa-chevron-up
-    = @post.votes_for.size
-    = button_to  down_voted_path, params: { id: @post.id } do
-      %i.fas.fa-chevron-down
+  .post__vote.px-2.text-center
+    = render partial: 'vote_part', locals: { post: @post }
 
   .main.d-flex.flex-column.pb-2
     .post.d-flex.flex-column.pb-2
@@ -19,9 +15,9 @@
           = link_to "Edit", edit_post_path(@post), class: "button"
           = link_to 'Delete', post_path(@post), method: :delete, class: 'button'
 
-    .comment_block
-      - if user_signed_in?
-        %h2 Write commit
-        = render 'comments/form'
-
-      = render 'comments/index', locals: { commentable: @post }
+.comment_block
+  - if user_signed_in?
+    %h2 
+      Write commit
+      = render 'comments/form'
+  = render 'comments/index', locals: { commentable: @post }

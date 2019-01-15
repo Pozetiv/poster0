@@ -1,0 +1,7 @@
+= link_to  up_voted_post_path(post) do
+  %i.fas.fa-chevron-up
+%hr
+= post.votes_for.size
+%hr
+= link_to  down_voted_post_path(post)  do
+  %i.fas.fa-chevron-down  
