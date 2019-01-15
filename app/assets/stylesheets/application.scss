@@ -55,15 +55,16 @@ header {
   background: white;
   border-radius: 2%;
 }
+
 $main_background: white;
 
 .post {
   background:  $main_background;
   border: 1px solid silver;
 
-  .post__vote{
-    background: gainsboro;
-  }
-
+  
 }
 
+.post__vote{
+  background: gainsboro;
+}

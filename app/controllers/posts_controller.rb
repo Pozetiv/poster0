@@ -53,12 +53,12 @@ class PostsController < ApplicationController
   end
 
   def up_voted
-    current_user.likes(@post)
+    @post.upvote_from(current_user)
     redirect_back(fallback_location: root_path)
   end
 
   def down_voted
-    @post.downvote_from current_user
+    @post.downvote_from(current_user)
     redirect_back(fallback_location: root_path)
   end
 

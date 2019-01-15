@@ -1,10 +1,19 @@
+require 'sidekiq/web'
 Rails.application.routes.draw do
+  authenticate :user, lambda { |u| u.admin? } do
+    mount Sidekiq::Web => '/sidekiq'
+  end
+  root "posts#index"
+
   get 'messages/index'
   get 'conversations/index'
-  root "posts#index"
 
   resources :posts do
     resources :comments, except: [:show]
+    member do
+      get 'up_voted', to: 'posts#up_voted'
+      get 'down_voted', to: 'posts#down_voted'
+    end
   end
 
   resources :comments do
@@ -31,10 +40,7 @@ Rails.application.routes.draw do
     # end
     get 'profile', to: 'users#profile'
   end
-
-  post 'up_voted', to: 'posts#up_voted'
-  post 'down_voted', to: 'posts#down_voted'
-
+  
   get 'about', to: 'static_pages#about'
   get 'press', to: 'static_pages#press'
   get 'rules', to: 'static_pages#rules'
