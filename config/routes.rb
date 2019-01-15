@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   authenticate :user, lambda { |u| u.admin? } do
     mount Sidekiq::Web => '/sidekiq'
   end
+  
   root "posts#index"
 
   get 'messages/index'
@@ -35,9 +36,6 @@ Rails.application.routes.draw do
 
   devise_for :users
   resources :users do
-    # resource :mail_boxes, only: [:show] do
-    #   resources :direct_messages, only: [:new, :create, :destroy]
-    # end
     get 'profile', to: 'users#profile'
   end
   
