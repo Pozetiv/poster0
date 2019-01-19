@@ -1,4 +1,4 @@
-= user_avar(object.user)
+= link_to user_avar(object.user), user_profile_path(object.user)
 = link_to object.user.nick, user_profile_path(object.user)
 = status_user(object.user)
 - if user_signed_in?

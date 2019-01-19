@@ -62,6 +62,9 @@ class PostsController < ApplicationController
     redirect_back(fallback_location: root_path)
   end
 
+  def trends_month
+    @posts = Post.trend_month
+  end
 
   private
 

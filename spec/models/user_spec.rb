@@ -9,7 +9,6 @@ RSpec.describe User, type: :model do
     end
 
     it 'created default user' do
-      binding.pry
       expect(user.admin).to be(false)
     end
   end

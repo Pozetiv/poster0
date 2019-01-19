@@ -1,4 +1,4 @@
 = simple_form_for([@commentable, Comment.new]) do |f|
   .form_group
-    = f.input :body, as: :text, label: false, input_html: { class: 'form-control' }, wrapper: false, placeholder: 'Comment text ...'
-  = f.button :submit, class: 'button'
+    = f.input :body, as: :text, label: false, input_html: { class: 'form-control' }, wrapper: false, placeholder: 'Comment text ...' 
+  = f.button :submit, class: 'btn btn-outline-primary'

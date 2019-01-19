@@ -24,7 +24,8 @@ class Post < ApplicationRecord
     { begin_day: DateTime.now.utc.beginning_of_day, finish_day: DateTime.now.utc.end_of_day })
   end
   scope :trend_month, -> do most_liked.where("created_at >= :begin_month and created_at <= :finish_month",
-    { begin_month: DateTime.now.utc.beginning_of_month, finish_month: DateTime.now.utc.end_of_month })
+    { begin_month: DateTime.now.utc.beginning_of_month.months_since(-1),
+      finish_month: DateTime.now.utc.end_of_month.months_since(-1) })
   end
   scope :post_by_category, -> (category) { joins(:community).where("communities.category like ?", "%#{category}%") if category.present? }
 

@@ -3,11 +3,20 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <style>
-      /* Email styles need to be inline */
+       body {
+        padding: 0px;
+        margin: 0px;
+        background: #3FEEE6;
+        }
+        .container {
+          margin: 2%;
+        }
     </style>
   </head>
 
   <body>
-    <%= yield %>
+    <div class="container">
+      <%= yield %>
+    </div>
   </body>
 </html>

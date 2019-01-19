@@ -20,7 +20,7 @@
  body {
    padding: 0px;
    margin: 0px;
-   background: #c7d3e5;
+   background: #659DBD;
  }
 
 header {
@@ -67,4 +67,11 @@ $main_background: white;
 
 .post__vote{
   background: gainsboro;
+}
+
+.alert {
+  display: block;
+  width: 30%;
+  position: absolute;
+  right: 1%;
 }
