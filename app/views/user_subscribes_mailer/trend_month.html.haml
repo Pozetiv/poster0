@@ -1,0 +1,3 @@
+%h2 
+  Hello #{@user.nick} if you want see Trand #{(Time.now - 1.month).strftime("%B %Y")}
+  = link_to 'Click to see trends month', trends_month_url

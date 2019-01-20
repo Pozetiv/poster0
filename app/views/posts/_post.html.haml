@@ -1,0 +1,20 @@
+.post.d-flex.flex-row-reverse.mb-3.justify-content-end
+  .post__container.d-flex.flex-column.px-2
+    .post__header
+      %small
+        = link_to post.community.name, community_path(post.community), class: 'text-dark'
+        %span.text-secondary
+          Posted by 
+          = link_to "#{post.user.nick}", user_profile_path(post.user)
+          = time_ago_in_words(post.created_at)
+    .post__body.d-flex.flex-column
+      = post.title
+      .post__body_image
+        = link_to (image_tag post.image.url(:thumb), class: 'img-fluid img-thumbnail mx-auto' if post.image?), post_path(post)
+      = post.body if post.body?
+    .post__footer.text-secondary
+      Comments
+      = link_to  post_path(post), class: 'text-secondary' do
+        %i.fas.fa-comments #{post.comments.count}
+  .post__vote.px-2.pt-4.text-center
+    = render partial: 'posts/vote_part', locals: { post: post }

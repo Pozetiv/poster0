@@ -71,3 +71,5 @@ gem 'will_paginate', '~> 3.1.0'
 gem 'will_paginate-bootstrap4'
 gem 'active_record_union'
 gem 'sidekiq'
+gem 'sidekiq-client-cli'
+gem 'whenever', require: false

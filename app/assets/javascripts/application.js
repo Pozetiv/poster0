@@ -20,10 +20,13 @@
 //= require cocoon
 
 $(document).on('turbolinks:load', function () {
-  $(".alert-info").hide(3500, function () {
-    $(this).remove();
-  });
-  $(".alert").hide(5000, function(){
-    $(this).remove();
+  setTimeout(function () {
+      $(".alert").hide('fast', function(){
+        $(this).remove();
+      });
+    }, 12000);
+
+  $("#reply_button").click(function () {
+      $(".reply_body").toggle("slow", function () { });
   });
 });

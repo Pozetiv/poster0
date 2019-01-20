@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   authenticate :user, lambda { |u| u.admin? } do
     mount Sidekiq::Web => '/sidekiq'
   end
-  
+
   root "posts#index"
 
   get 'messages/index'
@@ -16,6 +16,7 @@ Rails.application.routes.draw do
       get 'down_voted', to: 'posts#down_voted'
     end
   end
+  get '/trends_month', to: 'posts#trends_month'
 
   resources :comments do
     resources :comments, except: [:show]

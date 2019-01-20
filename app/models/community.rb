@@ -19,7 +19,6 @@ class Community < ApplicationRecord
   scope :popular_communities, -> { left_outer_joins(:subscribes).group('communities.id').order('COUNT(subscribes.community_id) DESC') }
   scope :popular_communities_mini, -> { popular_communities.limit(5) }
   
-
   after_save :subscribe_owner
 
   mount_uploader :image, CommunityUploader
@@ -37,7 +36,7 @@ class Community < ApplicationRecord
   end
 
   private
-  
+
   def subscribe_owner
     self.subscribes.create( user: self.owner )
   end
