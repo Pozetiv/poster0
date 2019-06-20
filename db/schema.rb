@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_01_14_193041) do
+ActiveRecord::Schema.define(version: 2019_06_20_091859) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -32,6 +32,8 @@ ActiveRecord::Schema.define(version: 2019_01_14_193041) do
     t.string "slug"
     t.integer "user_id"
     t.string "category"
+    t.integer "subscribes_count"
+    t.integer "posts_count"
   end
 
   create_table "community_administrations", force: :cascade do |t|
