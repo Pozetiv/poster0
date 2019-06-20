@@ -16,7 +16,7 @@
           = image_tag community.image.url(:mini) if community.image?
           = link_to community.name, community_path(community)
           %br
-          %small #{community.subscribes.count}  subscribers
+          %small #{community.subscribes.size}  subscribers
         .community__button.ml-auto
           = button_to 'SUBSCRIBE',  subscribes_path, params: { community_id: community.id }, class: 'btn btn-primary'
   .panel_block.d-flex.flex-column.p-2

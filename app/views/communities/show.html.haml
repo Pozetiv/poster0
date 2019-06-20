@@ -11,10 +11,10 @@
       = button_to 'SUBSCRIBE',  subscribes_path, params: { community_id: @community.id }, class: 'btn btn-primary btn-lg btn-block'
       .main_block__information.d-flex.flex-row.justify-content-around
         .information__subcribes.d-flex.flex-column
-          = @community.subscribes.count
+          = @community.subscribes.size
           %small Subscribers
         .information__posts.d-flex.flex-column
-          = @community.posts.count
+          = @community.posts.size
           %small Posts
       = link_to 'View Subscribers', subscribers_community_path, class: 'text-muted'
       - if user_signed_in? && ( @community.owner?(current_user) || current_user.admin? )
