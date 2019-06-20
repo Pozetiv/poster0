@@ -1,4 +1,4 @@
-- if current_user.voted_up_on?(post)
+- if user_signed_in? && current_user.voted_up_on?(post)
   = link_to  up_voted_post_path(post) do
     %i.fas.fa-chevron-up.text-success
 - else
@@ -7,9 +7,9 @@
 %hr
 = post.votes_for.size
 %hr
-- if current_user.voted_down_on?(post)
+- if user_signed_in? && current_user.voted_down_on?(post)
   = link_to  down_voted_post_path(post) do
     %i.fas.fa-chevron-down.text-danger
 - else
-  = link_to  down_voted_post_path(post)  do
+  = link_to  down_voted_post_path(post) do
     %i.fas.fa-chevron-down

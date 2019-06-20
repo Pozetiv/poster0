@@ -13,8 +13,8 @@
 //= require rails-ujs
 //= require activestorage
 //= require turbolinks
-//= require_tree .
 //= require jquery
+//= require_tree .
 //= require popper
 //= require bootstrap-sprockets
 //= require cocoon
@@ -25,8 +25,4 @@ $(document).on('turbolinks:load', function () {
         $(this).remove();
       });
     }, 12000);
-
-  $("#reply_button").click(function () {
-      $(".reply_body").toggle("slow", function () { });
-  });
 });
