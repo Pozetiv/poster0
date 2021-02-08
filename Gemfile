@@ -63,7 +63,7 @@ gem 'jquery-rails'
 gem 'haml', '~> 5.0', '>= 5.0.4'
 gem 'simple_form', '~> 4.0', '>= 4.0.1'
 gem 'devise', '~> 4.5'
-gem 'carrierwave', '~> 1.0'
+gem 'carrierwave', '~> 1.3'
 gem 'acts_as_votable', '~> 0.11.1'
 gem 'friendly_id'
 gem "cocoon"
